@@ -7,20 +7,22 @@ public class Movement : MonoBehaviour
 {
     private CharacterController characterController;
     public Vector2 movementVector;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
     }
+
     public void PlayerMovement(InputAction.CallbackContext context)
     {
         movementVector = context.ReadValue<Vector2>();
-        if (context.started)
+    }
+
+    private void Update()
+    {
+        if (movementVector != new Vector2(0, 0)) 
         {
-            Debug.Log("KLIK!");
-        }
-        if (context.canceled)
-        {
-            Debug.Log("canceled!");
+            characterController.Move(new Vector3(movementVector.x, 0, movementVector.y) * Time.deltaTime * 10);
         }
     }
 }
