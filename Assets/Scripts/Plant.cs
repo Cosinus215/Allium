@@ -13,11 +13,11 @@ public class Plant : ScriptableObject
     //przechowujaca je w jednym miejscu caly czas? Ale jak ja wtedy zapisac? ID? NameID?
     //>Stan rosliny powinien byc w SO? Czy nie bedziemy tego naduzywac i wystarczy enum?
 
-    [SerializeField] private string plantName = "default plant";
-    [SerializeField] private Sprite plantIcon;
-    [SerializeField] private Texture[] plantTextures;
+    [SerializeField] private string plantName = "default plant";//PlantData?
+    [SerializeField] private Sprite plantIcon;//PlantData?
+    [SerializeField] private Texture[] plantTextures;//PlantData?
     [Tooltip("How long plant sould growth in seconds")]
-    [SerializeField] private int plantGrowthTime = 20;
+    [SerializeField] private int plantGrowthTime = 20;//PlantData?
     [Tooltip("Current plant age in seconds")]
     [SerializeField] private int plantAge = 0;
     public enum PlantState {Growing,ReadyToHarvest};
@@ -39,7 +39,13 @@ public class Plant : ScriptableObject
     }
     public void UpdateGraphic(Renderer target)
     {
-        if(growthStage != CurrentTextureID())
+        if (target == null)
+        {
+            return;
+        }
+        //zmieniamy grafike tylko gdy zachodzi zmiana :)
+        //nie marnujmy mocy procesora na ladowanie grafiki bez potrzeby
+        if (growthStage != CurrentTextureID())
         {
             growthStage = CurrentTextureID();
             target.material.SetTexture("_BaseMap", plantTextures[growthStage]);
@@ -61,7 +67,7 @@ public class Plant : ScriptableObject
         int id = 0;
         if (currentPlantState == PlantState.ReadyToHarvest || plantGrowthTime == 0 )
         {
-            //Plant if full grown
+            //Roslinka w pelni wyrosnieta
             id = stages - 1;
         }
         else
@@ -69,19 +75,19 @@ public class Plant : ScriptableObject
             id = (plantAge / (plantGrowthTime / (stages - 1)));
             if (id >= stages - 1)
             {
-                //plant isnt full grown
+                //Roslinka prawie wyrosnieta
                 id = stages - 2;
             }
         }
-        
+        //musimy sie upewnic ze nie wyjdziemy poza zakres tablicy
         id = Mathf.Clamp(id, 0, stages - 1);
         return id;
     }
 
-    public void OnTick()
+    public void OnTick(Renderer targetGraphic)
     {
-        plantAge++;
-        if(plantAge > plantGrowthTime)
+        plantAge+= GameManager.SECONDS_PER_TICK;
+        if(plantAge >= plantGrowthTime)
         {
             plantAge = plantGrowthTime;
             if (currentPlantState == PlantState.Growing)
@@ -90,5 +96,6 @@ public class Plant : ScriptableObject
                 Debug.Log($"{plantName} is ready to harvest!");
             }
         }
+        UpdateGraphic(targetGraphic);
     }
 }

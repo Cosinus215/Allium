@@ -16,7 +16,8 @@ public class FarmlandBlock : MonoBehaviour
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
-        SetPlantData(plantData);
+        SetPlantData(plantData);//na potrzeby testow
+        //potem octi bedzie sadzil lub GameManager po wczytaniu pliku
     }
 
     public void SetPlantData(Plant newPlant) 
@@ -27,7 +28,6 @@ public class FarmlandBlock : MonoBehaviour
             plantData.name = $"{newPlant.GetPlantName()} clone";
             plantData.ResetPlant();
             plantData.UpdateGraphic(plantMaterial);
-            //plantMaterial.material.SetTexture("_BaseMap", plantData.GetPlantTexture());
             plantRoot.SetActive(true); 
         }
         else
@@ -42,9 +42,7 @@ public class FarmlandBlock : MonoBehaviour
     {
         if(plantData != null)
         {
-            plantData.OnTick();
-            plantData.UpdateGraphic(plantMaterial);
-            //plantMaterial.material.SetTexture("_BaseMap", plantData.GetPlantTexture());
+            plantData.OnTick(plantMaterial);
         }
     }
 }
