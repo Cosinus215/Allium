@@ -1,45 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
-[CreateAssetMenu(menuName = "Plants/base plant", fileName = "NewPlantData")]
-public class Plant : ScriptableObject
+[System.Serializable]
+public class Plant
 {
-    //Potencjalne problemy do omowienia:
-    //>Co z grafikami? Kopiujac zajmujemy wiecej pamieci? Moze klasa PlantData
-    //przechowujaca je w jednym miejscu caly czas? Ale jak ja wtedy zapisac? ID? NameID?
-    //>Stan rosliny powinien byc w SO? Czy nie bedziemy tego naduzywac i wystarczy enum?
-
-    [SerializeField] private string plantName = "default plant";//PlantData?
-    [SerializeField] private Sprite plantIcon;//PlantData?
-    [SerializeField] private Texture[] plantTextures;//PlantData?
-    [Tooltip("How long plant sould growth in seconds")]
-    [SerializeField] private int plantGrowthTime = 20;//PlantData?
-    [Tooltip("Current plant age in seconds")]
+    [SerializeField] private PlantData plantData;
     [SerializeField] private int plantAge = 0;
     public enum PlantState {Growing,ReadyToHarvest};
     private PlantState currentPlantState;
 
     private int growthStage = -1;
-
-    public string GetPlantName()
+    public Plant(PlantData newData)
     {
-        return plantName;
+        plantData = newData;
+        ResetPlant();
     }
-    public Sprite GetPlantIcon()
+    public PlantData GetPlantData()
     {
-        return plantIcon;
-    }
-    public Texture GetPlantTexture()
-    {
-        return plantTextures[CurrentTextureID()];
+        return plantData;
     }
     public void UpdateGraphic(Renderer target)
     {
-        if (target == null)
+        if (target == null || plantData==null)
         {
             return;
         }
@@ -48,7 +32,7 @@ public class Plant : ScriptableObject
         if (growthStage != CurrentTextureID())
         {
             growthStage = CurrentTextureID();
-            target.material.SetTexture("_BaseMap", plantTextures[growthStage]);
+            target.material.SetTexture("_BaseMap", plantData.GetPlantTexture(growthStage));
         }
     }
     public void ResetPlant()
@@ -59,20 +43,20 @@ public class Plant : ScriptableObject
     }
     private int CurrentTextureID()
     {
-        int stages = plantTextures.Length;
+        int stages = plantData.GrowthStages();
         if (stages == 0)
         {
             return 0;
         }
         int id = 0;
-        if (currentPlantState == PlantState.ReadyToHarvest || plantGrowthTime == 0 )
+        if (currentPlantState == PlantState.ReadyToHarvest || plantData.GetPlantGrowthTime() == 0 )
         {
             //Roslinka w pelni wyrosnieta
             id = stages - 1;
         }
         else
         {
-            id = (plantAge / (plantGrowthTime / (stages - 1)));
+            id = (plantAge / (plantData.GetPlantGrowthTime() / (stages - 1)));
             if (id >= stages - 1)
             {
                 //Roslinka prawie wyrosnieta
@@ -83,17 +67,18 @@ public class Plant : ScriptableObject
         id = Mathf.Clamp(id, 0, stages - 1);
         return id;
     }
-
     public void OnTick(Renderer targetGraphic)
     {
+        if(plantData == null)return;
+
         plantAge+= GameManager.SECONDS_PER_TICK;
-        if(plantAge >= plantGrowthTime)
+        if(plantAge >= plantData.GetPlantGrowthTime())
         {
-            plantAge = plantGrowthTime;
+            plantAge = plantData.GetPlantGrowthTime();
             if (currentPlantState == PlantState.Growing)
             {
                 currentPlantState = PlantState.ReadyToHarvest;
-                Debug.Log($"{plantName} is ready to harvest!");
+                Debug.Log($"{plantData.GetPlantName()} is ready to harvest!");
             }
         }
         UpdateGraphic(targetGraphic);

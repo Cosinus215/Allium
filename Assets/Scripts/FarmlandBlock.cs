@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Czy potrzebujemy interfejsu "interakcja"? Farm block moze go implementowac
-//Potrzebujemy klasy nadrzednej "Block"? Czy beda inne bloki?
-public class FarmlandBlock : MonoBehaviour
+//https://learn.unity.com/tutorial/interfaces#
+public class FarmlandBlock : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject plantRoot;
     private Renderer plantMaterial;
-    [SerializeField] private Plant plantData;
+    [SerializeField] private PlantData plantDataSZABLON;
+    [SerializeField] private Plant currentPlant;
 
     private void Awake()
     {
@@ -16,33 +16,35 @@ public class FarmlandBlock : MonoBehaviour
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
-        SetPlantData(plantData);//na potrzeby testow
+        SetPlantData(plantDataSZABLON);//na potrzeby testow
         //potem octi bedzie sadzil lub GameManager po wczytaniu pliku
     }
 
-    public void SetPlantData(Plant newPlant) 
+    public void SetPlantData(PlantData newPlantData) 
     {
-        if(plantData != null) 
+        if(newPlantData != null) 
         {
-            plantData = Instantiate(newPlant);
-            plantData.name = $"{newPlant.GetPlantName()} clone";
-            plantData.ResetPlant();
-            plantData.UpdateGraphic(plantMaterial);
+            currentPlant = new Plant(newPlantData);
+            currentPlant.UpdateGraphic(plantMaterial);
             plantRoot.SetActive(true); 
         }
         else
         {
             plantRoot.SetActive(false);
-            Destroy(plantData);
-            plantData = null;   
+            currentPlant = null;   
         }
     }
 
     public void OnTick()
     {
-        if(plantData != null)
+        if(currentPlant != null)
         {
-            plantData.OnTick(plantMaterial);
+            currentPlant.OnTick(plantMaterial);
         }
+    }
+
+    public void Interact()
+    {
+        Debug.Log($"Interaction with: {name}");
     }
 }
