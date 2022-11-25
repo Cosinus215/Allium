@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
 {
     private CharacterController characterController;
     private Vector2 movementVector;
+    [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
     [SerializeField] private GameObject Octi;
@@ -35,7 +36,7 @@ public class Movement : MonoBehaviour
     {
         if (movementVector.magnitude > deadZone)
         {
-            characterController.Move(new Vector3(movementVector.x, 0, movementVector.y) * Time.deltaTime * 10);
+            characterController.Move(new Vector3(movementVector.x, 0, movementVector.y) * Time.deltaTime * movementSpeed);
         }
     }
 
