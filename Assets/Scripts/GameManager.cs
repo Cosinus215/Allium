@@ -11,21 +11,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameEvent tickEvent;
 
     [Header("Time")]
-    [SerializeField] private int dayTime = 0;
-    private int ticksPerDay  = 24;
-    private int sunriseTick = 6;
-    private int sunsetTick = 18;
+    [SerializeField, Range(0,24)] private int dayTick = 0;
     private uint gameTick = 0;
     [Space]
-    [SerializeField] private float currentSunAngle = 0;
-    [SerializeField] private float sunriseSunAngle = 90;
-    [SerializeField] private float sunsetSunAngle = 180;
-    [Space]
-    [SerializeField] private Transform sun;
+    [SerializeField] private Light sun;
+    [SerializeField] private LightPreset preset;
     public enum Weather { Sunny, Cloudy, Rainy };
     [Header("Weather")]
     public Weather currentWeather;
-
+    private uint weatherUpdateTick = 0;
+    private const uint WEATHER_MIN_UPDATE_TRESHOLD = 10;
+    private const uint WEATHER_MAX_UPDATE_TRESHOLD = 30;
     private void Start()
     {
         //Internal game timer
@@ -37,55 +33,53 @@ public class GameManager : MonoBehaviour
         for (;;)
         {
             ++gameTick;
+            ++dayTick;
+            if (dayTick >= 24)
+            {
+                dayTick = 0;
+            }
             tickEvent.Raise();
             HandleDayCycle();
+
+            if(gameTick >= weatherUpdateTick)
+            {
+                ChangeWeather();
+            }
             yield return tickTime;
         }
     }
     private void HandleDayCycle()
     {
-        dayTime++;
-        if (dayTime > ticksPerDay)
-        {
-            dayTime = 0;
-        }
-        if (dayTime >= sunriseTick && dayTime <= sunsetTick)
-        {
-            //Day
-            float sunPercentage = (float)((float)dayTime - (float)sunriseTick) / (float)((float)sunsetTick - (float)sunriseTick);
-            currentSunAngle = Mathf.Lerp(sunriseSunAngle, sunsetSunAngle, sunPercentage);
-            //Debug.Log($"Day: {sunPercentage*100}%");
-        }
-        else
-        {
-            //Night
-            float nightLength = ticksPerDay - sunsetTick + sunriseTick;
-            float nightTick = 0;
-            if (dayTime < sunriseTick)
-            {
-                nightTick = (ticksPerDay - sunsetTick) + dayTime + 1;
-            }
-            else
-            {
-                nightTick = Mathf.Abs(dayTime - sunsetTick);
-            }
-            float nightPercentage = nightTick / nightLength;
-            currentSunAngle = Mathf.Lerp(sunsetSunAngle, sunriseSunAngle, nightPercentage);
-            //Debug.Log($"Night: {nightPercentage*100}% {nightTick} z {nightLength}");
-        }
+        /*
+         * Later move to some sort of coroutine to avoid "blockines" of
+         * light updates
+        */
+        UpdateLighting((float)dayTick/ 24);
+    }
+    private void UpdateLighting(float dayPercentage)
+    {
+        if (!preset || ! sun) return;
+        RenderSettings.ambientLight = preset.ambientColor.Evaluate(dayPercentage);
+        RenderSettings.fogColor = preset.fogColor.Evaluate(dayPercentage);
 
-        if (sun)
-        {
-            sun.rotation = new Quaternion(currentSunAngle, 0, 0, 0);
-        }
-        
+        sun.color = preset.directionalColor.Evaluate(dayPercentage);
+        sun.transform.localRotation = Quaternion.Euler(new Vector3((dayPercentage*360f)-90f,-170,0));
     }
     private void ChangeWeather()
     {
-        
+        weatherUpdateTick += (uint)UnityEngine.Random.Range(
+            WEATHER_MIN_UPDATE_TRESHOLD,
+            WEATHER_MAX_UPDATE_TRESHOLD);
+        currentWeather = (Weather)UnityEngine.Random.Range(0, 3);
+        Debug.Log($"Weather changed!");
     }
     public Weather GetCurrentWeather()
     {
         return currentWeather;
+    }
+    //Metoda wykonywana nawet w edytorze - mo¿emy mieæ podgl¹d nawet poza gr¹!
+    public void OnValidate()
+    {
+        HandleDayCycle();
     }
 }
