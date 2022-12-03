@@ -129,3 +129,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Hoe
   Icon: {fileID: 21300000, guid: f7661225ae6d88a4e93556af8f7d1aff, type: 3}
+  Texture: {fileID: 0}

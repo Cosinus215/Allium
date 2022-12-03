@@ -6,4 +6,6 @@ using UnityEngine;
 public class Items : ScriptableObject {
     public string Name;
     public Sprite Icon;
+    public Material Texture;
 }
+
