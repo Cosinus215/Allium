@@ -10,7 +10,7 @@ public class Weather
     public ParticleSystem particleEffect;
     public bool isWatering = false;
 
-    public void ToogleWeater(bool active)
+    public void ToogleWeather(bool active)
     {
         if (particleEffect != null)
         {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,8 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameEvent tickEvent;
 
     [Header("Time")]
-    [SerializeField, Range(0,24)] private int dayTick = 0;
-    private uint gameTick = 0;
+    [SerializeField, Range(0,24)] private byte dayTick = 0;
+    private ulong gameTick = 0;
     [Space]
     [SerializeField] private Light sun;
     [SerializeField] private AnimationCurve sunAngleOverTime;
@@ -39,7 +38,6 @@ public class GameManager : MonoBehaviour
         //Internal game timer
         StartCoroutine(GameTick());
     }
-
     private IEnumerator GameTick()
     {
         for (;;)
@@ -71,7 +69,7 @@ public class GameManager : MonoBehaviour
     private void UpdateLighting(float dayPercentage)
     {
         LightPreset preset = currentWeather.lightPreset;
-        if (!preset || ! sun) return;
+        if (!preset || !sun) return;
 
         RenderSettings.ambientLight = preset.ambientColor.Evaluate(dayPercentage);
         RenderSettings.fogColor = preset.fogColor.Evaluate(dayPercentage);
@@ -81,23 +79,24 @@ public class GameManager : MonoBehaviour
             new Vector3(sunAngleOverTime.Evaluate(dayPercentage)*180,
             -170,
             0));
-
-        sun.transform.localRotation = Quaternion.Euler(new Vector3((dayPercentage*360f)-90f,-170,0));
     }
     private void ChangeWeather()
     {
         weatherUpdateTick += (uint)UnityEngine.Random.Range(
             WEATHER_MIN_UPDATE_TRESHOLD,
             WEATHER_MAX_UPDATE_TRESHOLD);
+
         int newWeatherID = UnityEngine.Random.Range(0, weather.Length);
 
-        for (int i=0;i<weather.Count();i++)
+        currentWeather.ToogleWeather(false);
+        for (int i=0;i<weather.Length;i++)
         {
             if (i == newWeatherID)
             {
                 currentWeather = weather[i];
+                currentWeather.ToogleWeather(true);
+                return;
             }
-            weather[i].ToogleWeater(i == newWeatherID);
         }
     }
     public Weather GetCurrentWeather()
