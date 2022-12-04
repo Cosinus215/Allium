@@ -9,7 +9,7 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     private Renderer plantMaterial;
     [SerializeField] private PlantData plantDataSZABLON;
     [SerializeField] private Plant currentPlant;
-
+    [SerializeField] private int waterLevel = 0;
     private void Awake()
     {
         if(plantRoot != null)
@@ -34,10 +34,21 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
             currentPlant = null;   
         }
     }
+    public void WaterBlock(int additionalWater = 10)
+    {
+        waterLevel+=additionalWater;
+        waterLevel = Mathf.Clamp(waterLevel,0,101);
 
+    }
     public void OnTick()
     {
-        if(currentPlant != null)
+        if (GameManager.Instance.currentWeather.isWatering)
+        {
+            WaterBlock(10);
+        }
+        WaterBlock(-1);
+
+        if (currentPlant != null && waterLevel>=0)
         {
             currentPlant.OnTick(plantMaterial);
         }

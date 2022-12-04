@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     [Header("Overall")]
     public const int SECONDS_PER_TICK = 1;
     private WaitForSeconds tickTime = new WaitForSeconds(SECONDS_PER_TICK);
@@ -15,15 +17,25 @@ public class GameManager : MonoBehaviour
     private uint gameTick = 0;
     [Space]
     [SerializeField] private Light sun;
-    [SerializeField] private LightPreset preset;
-    public enum Weather { Sunny, Cloudy, Rainy };
+    [SerializeField] private AnimationCurve sunAngleOverTime;
+
     [Header("Weather")]
     public Weather currentWeather;
+    public Weather[] weather;
     private uint weatherUpdateTick = 0;
-    private const uint WEATHER_MIN_UPDATE_TRESHOLD = 10;
-    private const uint WEATHER_MAX_UPDATE_TRESHOLD = 30;
+
+    private const uint WEATHER_MIN_UPDATE_TRESHOLD = 5;
+    private const uint WEATHER_MAX_UPDATE_TRESHOLD = 10;
     private void Start()
     {
+        if(Instance != null)
+        {
+            Debug.LogWarning("Multiple managers!");
+        }
+        else
+        {
+            Instance = this;
+        }
         //Internal game timer
         StartCoroutine(GameTick());
     }
@@ -58,11 +70,18 @@ public class GameManager : MonoBehaviour
     }
     private void UpdateLighting(float dayPercentage)
     {
+        LightPreset preset = currentWeather.lightPreset;
         if (!preset || ! sun) return;
+
         RenderSettings.ambientLight = preset.ambientColor.Evaluate(dayPercentage);
         RenderSettings.fogColor = preset.fogColor.Evaluate(dayPercentage);
 
         sun.color = preset.directionalColor.Evaluate(dayPercentage);
+        sun.transform.localRotation = Quaternion.Euler(
+            new Vector3(sunAngleOverTime.Evaluate(dayPercentage)*180,
+            -170,
+            0));
+
         sun.transform.localRotation = Quaternion.Euler(new Vector3((dayPercentage*360f)-90f,-170,0));
     }
     private void ChangeWeather()
@@ -70,8 +89,16 @@ public class GameManager : MonoBehaviour
         weatherUpdateTick += (uint)UnityEngine.Random.Range(
             WEATHER_MIN_UPDATE_TRESHOLD,
             WEATHER_MAX_UPDATE_TRESHOLD);
-        currentWeather = (Weather)UnityEngine.Random.Range(0, 3);
-        Debug.Log($"Weather changed!");
+        int newWeatherID = UnityEngine.Random.Range(0, weather.Length);
+
+        for (int i=0;i<weather.Count();i++)
+        {
+            if (i == newWeatherID)
+            {
+                currentWeather = weather[i];
+            }
+            weather[i].ToogleWeater(i == newWeatherID);
+        }
     }
     public Weather GetCurrentWeather()
     {
