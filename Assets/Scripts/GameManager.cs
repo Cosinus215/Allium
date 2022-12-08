@@ -43,11 +43,7 @@ public class GameManager : MonoBehaviour
         for (;;)
         {
             ++gameTick;
-            ++dayTick;
-            if (dayTick >= 24)
-            {
-                dayTick = 0;
-            }
+            dayTick= (byte)(gameTick%(24));
             tickEvent.Raise();
             HandleDayCycle();
 
