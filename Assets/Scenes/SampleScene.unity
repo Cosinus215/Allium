@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000004, guid: 7f4a898d853645648974f679af3adaac,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -586,6 +587,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1385512465582868825, guid: 860d91335036ff64a869a88b1e9d6a19,
+        type: 3}
+      propertyPath: itemToPickup
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f08d88f24c71634caad273f540dbfc0,
+        type: 2}
     - target: {fileID: 1385512465582868827, guid: 860d91335036ff64a869a88b1e9d6a19,
         type: 3}
       propertyPath: m_Name
@@ -1098,6 +1105,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2536151851006579686, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
         type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 2536151851006579686, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
+        type: 3}
       propertyPath: m_Name
       value: Octi
       objectReference: {fileID: 0}
@@ -1134,17 +1147,17 @@ PrefabInstance:
     - target: {fileID: 2536151851006579706, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2536151851006579706, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2536151851006579706, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2536151851006579706, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
         type: 3}
@@ -1166,6 +1179,27 @@ PrefabInstance:
       propertyPath: handPlace
       value: 
       objectReference: {fileID: 1459288910}
+    - target: {fileID: 2678524182628773919, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
+        type: 3}
+      propertyPath: Eq.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678524182628773919, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
+        type: 3}
+      propertyPath: Eq.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f08d88f24c71634caad273f540dbfc0,
+        type: 2}
+    - target: {fileID: 7807093450988663941, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807093450988663941, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9cb9282053ae14542bf66281fb769ef1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75b20c87c4b02cd47b2af8e5210d29d3, type: 3}
 --- !u!1001 &6243966931888039459
@@ -1180,6 +1214,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Watering Can
       objectReference: {fileID: 0}
+    - target: {fileID: 6243966931955412432, guid: 912a65a2d732a054ea5a8efc9a0de978,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243966931955412438, guid: 912a65a2d732a054ea5a8efc9a0de978,
+        type: 3}
+      propertyPath: itemToPickup
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f08d88f24c71634caad273f540dbfc0,
+        type: 2}
     - target: {fileID: 6243966931955412442, guid: 912a65a2d732a054ea5a8efc9a0de978,
         type: 3}
       propertyPath: m_RootOrder
