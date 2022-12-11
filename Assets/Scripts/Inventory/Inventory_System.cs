@@ -10,23 +10,42 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private GameObject selectingSquare;
     [SerializeField] private GameObject handPlace;
 
-    private void OnTriggerEnter(Collider collider) {
-        if (collider.TryGetComponent<Item_info>(out Item_info item_info)) {
-            Items newItem = ScriptableObject.CreateInstance<Items>();
-            newItem.Name    = item_info.Name;
-            newItem.Icon    = item_info.Icon;
-            newItem.Texture = item_info.Texture;
+    private void Start() {
+        if (Eq.Count > 0) {
+            handPlace.GetComponent<MeshRenderer>().enabled = true;
 
             for (int i = 0; i < UI_Eq.transform.childCount; i++) {
                 GameObject Slot = UI_Eq.transform.GetChild(i).gameObject;
                 if (Slot.GetComponent<Image>().sprite == null) {
-
-                    Eq.Add(newItem);
-                    Slot.GetComponent<Image>().sprite = newItem.Icon;
-
-                    Destroy(collider.gameObject);
+                    Slot.GetComponent<Image>().sprite = Eq[i].Icon;
                     break;
                 }
+            }
+
+            if (Eq[0]) {
+                handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[0].Texture);
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider) {
+        if (collider.TryGetComponent<Item_info>(out Item_info item_info)) {
+            Pickup_Item(item_info, collider);
+        }
+    }
+
+    void Pickup_Item(Item_info item_info, Collider collider) {
+        Items newItem = item_info.itemToPickup;
+
+        for (int i = 0; i < UI_Eq.transform.childCount; i++) {
+            GameObject Slot = UI_Eq.transform.GetChild(i).gameObject;
+            if (Slot.GetComponent<Image>().sprite == null) {
+
+                Eq.Add(newItem);
+                Slot.GetComponent<Image>().sprite = newItem.Icon;
+
+                Destroy(collider.gameObject);
+                break;
             }
         }
     }
@@ -40,8 +59,10 @@ public class Inventory_System : MonoBehaviour {
 
             if (selection_number <= Eq.Count) {
                 handPlace.GetComponent<MeshRenderer>().enabled = true;
-                handPlace.GetComponent<MeshRenderer>().material = Eq[selection_number - 1].Texture;
+                //handPlace.GetComponent<MeshRenderer>().material = Eq[selection_number - 1].Texture;
+                handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[selection_number - 1].Texture);
             } else {
+
                 handPlace.GetComponent<MeshRenderer>().enabled = false;
             }
         }

@@ -540,7 +540,7 @@ MonoBehaviour:
   Eq: []
   UI_Eq: {fileID: 1051932891202212680}
   selectingSquare: {fileID: 7196730374057337371}
-  handPlace: {fileID: 0}
+  handPlace: {fileID: 2648452216120165263}
 --- !u!1 &2648452216120165263
 GameObject:
   m_ObjectHideFlags: 0

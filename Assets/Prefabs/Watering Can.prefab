@@ -127,5 +127,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c7c1643d061d746b803fdf5cddd831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Watering Can
-  Icon: {fileID: 21300000, guid: de426959edad9254e9f056fa45dd65f3, type: 3}
+  itemToPickup: {fileID: 11400000, guid: 0478f588a4b5ef145a9a77c74f836fa1, type: 2}
