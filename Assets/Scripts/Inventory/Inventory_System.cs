@@ -14,11 +14,10 @@ public class Inventory_System : MonoBehaviour {
         if (Eq.Count > 0) {
             handPlace.GetComponent<MeshRenderer>().enabled = true;
 
-            for (int i = 0; i < UI_Eq.transform.childCount; i++) {
+            for (int i = 0; i < Eq.Count; i++) {
                 GameObject Slot = UI_Eq.transform.GetChild(i).gameObject;
                 if (Slot.GetComponent<Image>().sprite == null) {
                     Slot.GetComponent<Image>().sprite = Eq[i].Icon;
-                    break;
                 }
             }
 
