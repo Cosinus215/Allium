@@ -43,14 +43,16 @@ public class GameManager : MonoBehaviour
         for (;;)
         {
             ++gameTick;
-            dayTick= (byte)(gameTick%(24));
-            tickEvent.Raise();
-            HandleDayCycle();
+            dayTick = (byte)System.DateTime.Now.Hour;
 
             if(gameTick >= weatherUpdateTick)
             {
                 ChangeWeather();
             }
+
+            HandleDayCycle();
+
+            tickEvent.Raise();
             yield return tickTime;
         }
     }
