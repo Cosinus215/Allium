@@ -6,5 +6,5 @@ using UnityEngine;
 //jego metody!
 public interface IInteractable
 {
-    public void Interact();
+    public bool Interact(Items item=null);
 }

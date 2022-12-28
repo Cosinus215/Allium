@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 public class Inventory_System : MonoBehaviour {
     [SerializeField] private List<Items> Eq = new List<Items>();
+    [SerializeField] private Items currentItem;
     [SerializeField] private GameObject UI_Eq;
     [SerializeField] private GameObject selectingSquare;
     [SerializeField] private GameObject handPlace;
+    [SerializeField] private Transform point;
+    [SerializeField] private Vector3 hitboxSize;
 
     private void Start() {
+        
         if (Eq.Count > 0) {
             handPlace.GetComponent<MeshRenderer>().enabled = true;
 
@@ -25,6 +29,8 @@ public class Inventory_System : MonoBehaviour {
                 handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[0].Texture);
             }
         }
+        
+        ChangeHoldedItem(1);
     }
 
     private void OnTriggerEnter(Collider collider) {
@@ -53,17 +59,51 @@ public class Inventory_System : MonoBehaviour {
         if (context.started) {
             int selection_number = int.Parse(context.control.name);
 
-            selectingSquare.transform.parent = UI_Eq.transform.GetChild(selection_number - 1);
-            selectingSquare.transform.localPosition = Vector2.zero;
+            ChangeHoldedItem(selection_number);
+        }
+    }
+    
+    private void ChangeHoldedItem(int itemID)
+    {
+        selectingSquare.transform.parent = UI_Eq.transform.GetChild(itemID - 1);
+        selectingSquare.transform.localPosition = Vector2.zero;
 
-            if (selection_number <= Eq.Count) {
-                handPlace.GetComponent<MeshRenderer>().enabled = true;
-                //handPlace.GetComponent<MeshRenderer>().material = Eq[selection_number - 1].Texture;
-                handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[selection_number - 1].Texture);
-            } else {
+        if (itemID <= Eq.Count)
+        {
+            handPlace.GetComponent<MeshRenderer>().enabled = true;
+            handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[itemID - 1].Texture);
+            currentItem = Eq[itemID - 1];
+        }
+        else
+        {
 
-                handPlace.GetComponent<MeshRenderer>().enabled = false;
+            handPlace.GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+    
+    public void Action(InputAction.CallbackContext context)
+    {
+        if (context.started && point)
+        {
+            Collider[] hit = Physics.OverlapBox(point.position, hitboxSize);
+            Debug.Log($"Used: {currentItem.Name} {hit[0]}");
+            for (int i = 0;i < hit.Length; ++i) 
+            {
+                
+                if (hit[i].gameObject.TryGetComponent(out IInteractable inter))
+                {
+                    bool b = inter.Interact(currentItem);
+                    return;
+                }
             }
+        }
+    }
+    void OnDrawGizmos()
+    {
+        if (point)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(point.position, hitboxSize);
         }
     }
 }

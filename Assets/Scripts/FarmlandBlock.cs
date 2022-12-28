@@ -12,14 +12,13 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     [SerializeField] private int waterLevel = 0;
     private void Awake()
     {
-        if(plantRoot             !=                                     null)
+        if(plantRoot                    !=                                null)
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
         SetPlantData(plantDataSZABLON);//na potrzeby testow
         //potem octi bedzie sadzil lub GameManager po wczytaniu pliku
     }
-
     public void SetPlantData(PlantData newPlantData) 
     {
         if(newPlantData != null) 
@@ -55,9 +54,29 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
             currentPlant.OnTick(plantMaterial);
         }
     }
-
-    public void Interact()
+    public bool Interact(Items item = null)
     {
         Debug.Log($"Interaction with: {name}");
+        switch (item.itemType) 
+        {
+            case Items.Type.Axe:
+                Debug.Log("Ciupaga");
+                return false;
+
+            case Items.Type.Hoe:
+                return false;
+
+            case Items.Type.Shovel:
+                Debug.Log("Lopata");
+                return false;
+
+            case Items.Type.Can:
+                WaterBlock(25);
+                return true;
+
+            default:
+                Debug.Log("Shitty item");
+                return false;
+        }
     }
 }
