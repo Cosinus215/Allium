@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestPlant
   m_EditorClassIdentifier: 
   plantName: default plant
-  plantIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  plantIcon: {fileID: 21300000, guid: dfb91a5dcee5c524a81326cf57a44b50, type: 3}
   plantTextures:
   - {fileID: 2800000, guid: 7867d01d34fef5244a4a32acacc1ce50, type: 3}
   - {fileID: 2800000, guid: 29b669c57b2b494408202ff912b981fe, type: 3}

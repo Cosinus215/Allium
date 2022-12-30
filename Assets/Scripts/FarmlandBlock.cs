@@ -7,14 +7,17 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject plantRoot;
     private Renderer plantMaterial;
+    [SerializeField] private PlantData plantDataSZABLON;
     [SerializeField] private Plant currentPlant;
     [SerializeField] private int waterLevel = 0;
+
     private void Awake()
     {
         if(plantRoot                  is not                              null)
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
+        SetPlantData(plantDataSZABLON);
     }
     public bool SetPlantData(PlantData newPlantData) 
     {
@@ -78,6 +81,8 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
                 return true;
 
             case Items.Type.Bundle:
+
+
                 seed seedling = Inventory_System.Instance.GetSeed();
                 Debug.Log(seedling);
 

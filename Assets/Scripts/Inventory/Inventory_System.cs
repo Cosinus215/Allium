@@ -15,9 +15,14 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private GameObject handPlace;
     [SerializeField] private Transform point;
     [SerializeField] private Vector3 hitboxSize;
-
+    public GameObject Bundle;
+    private int SeedNumber;
 
     private void Start() {
+        for (int i = 0; i < Planttest.Count; i++) {
+            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Planttest[i].plant.GetPlantIcon();
+        }
+
         if (Instance is null) {
             Instance = this;
         } else {
@@ -70,6 +75,12 @@ public class Inventory_System : MonoBehaviour {
         if (context.started) {
             int selection_number = int.Parse(context.control.name);
 
+            if (Eq[selection_number-1].itemType == Items.Type.Bundle) {
+                Bundle.SetActive(true);
+            } else {
+                Bundle.SetActive(false);
+            }
+
             ChangeHoldedItem(selection_number);
         }
     }
@@ -118,8 +129,12 @@ public class Inventory_System : MonoBehaviour {
         }
     }
 
+    public void GetSeedNumber(int i) {
+        SeedNumber = i;
+    }
+
     public seed GetSeed() {
-        return Planttest[0];
+        return Planttest[SeedNumber];
     }
 }
 

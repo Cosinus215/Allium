@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
         if(Instance != null)
         {
             Debug.LogWarning("Multiple managers!");
+            Debug.Log(Instance.gameObject);
         }
         else
         {
@@ -43,7 +44,8 @@ public class GameManager : MonoBehaviour
         for (;;)
         {
             ++gameTick;
-            dayTick = (byte)System.DateTime.Now.Hour;
+            //dayTick = (byte)System.DateTime.Now.Hour;
+            dayTick = 8;
 
             if(gameTick >= weatherUpdateTick)
             {
