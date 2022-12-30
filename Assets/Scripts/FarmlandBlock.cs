@@ -7,30 +7,33 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject plantRoot;
     private Renderer plantMaterial;
-    [SerializeField] private PlantData plantDataSZABLON;
     [SerializeField] private Plant currentPlant;
     [SerializeField] private int waterLevel = 0;
     private void Awake()
     {
-        if(plantRoot                    !=                                null)
+        if(plantRoot                  is not                              null)
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
-        SetPlantData(plantDataSZABLON);//na potrzeby testow
-        //potem octi bedzie sadzil lub GameManager po wczytaniu pliku
     }
-    public void SetPlantData(PlantData newPlantData) 
+    public bool SetPlantData(PlantData newPlantData) 
     {
         if(newPlantData != null) 
         {
-            currentPlant = new Plant(newPlantData);
-            currentPlant.UpdateGraphic(plantMaterial);
-            plantRoot.SetActive(true); 
+            if (currentPlant == null) {
+                currentPlant = new Plant(newPlantData);
+                currentPlant.UpdateGraphic(plantMaterial);
+                plantRoot.SetActive(true);
+                return true;
+            } else {
+                return false;
+            }
         }
         else
         {
             plantRoot.SetActive(false);
-            currentPlant = null;   
+            currentPlant = null;
+            return false;
         }
     }
     public void WaterBlock(int additionalWater = 10)
@@ -73,6 +76,21 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
             case Items.Type.Can:
                 WaterBlock(25);
                 return true;
+
+            case Items.Type.Bundle:
+                seed seedling = Inventory_System.Instance.GetSeed();
+                Debug.Log(seedling);
+
+                if (seedling != null && seedling.number > 0) {
+                    if (SetPlantData(seedling.plant)) {
+                        seedling.number--;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
 
             default:
                 Debug.Log("Shitty item");

@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Inventory_System : MonoBehaviour {
+    public static Inventory_System Instance;
+
+    public List<seed> Planttest = new List<seed>();
     [SerializeField] private List<Items> Eq = new List<Items>();
     [SerializeField] private Items currentItem;
     [SerializeField] private GameObject UI_Eq;
@@ -13,7 +16,15 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private Transform point;
     [SerializeField] private Vector3 hitboxSize;
 
+
     private void Start() {
+        if (Instance is null) {
+            Instance = this;
+        } else {
+            Debug.LogWarning("Too much inventories");
+            Destroy(this);
+            return;
+        }
         
         if (Eq.Count > 0) {
             handPlace.GetComponent<MeshRenderer>().enabled = true;
@@ -106,4 +117,14 @@ public class Inventory_System : MonoBehaviour {
             Gizmos.DrawWireCube(point.position, hitboxSize);
         }
     }
+
+    public seed GetSeed() {
+        return Planttest[0];
+    }
+}
+
+[System.Serializable]
+public class seed {
+    public int number;
+    public PlantData plant;
 }

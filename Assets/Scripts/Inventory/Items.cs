@@ -7,7 +7,8 @@ public class Items : ScriptableObject {
     public string Name;
     public Sprite Icon;
     public Texture Texture;
-    public enum Type {Axe, Hoe, Shovel, Can};
+ 
+    public enum Type {Axe, Hoe, Shovel, Can, Bundle};
     public Type itemType;
 }
 
