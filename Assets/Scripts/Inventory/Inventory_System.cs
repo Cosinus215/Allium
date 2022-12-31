@@ -19,9 +19,7 @@ public class Inventory_System : MonoBehaviour {
     private int SeedNumber;
 
     private void Start() {
-        for (int i = 0; i < Planttest.Count; i++) {
-            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Planttest[i].plant.GetPlantIcon();
-        }
+        UpgradeBundleUI();
 
         if (Instance is null) {
             Instance = this;
@@ -48,6 +46,7 @@ public class Inventory_System : MonoBehaviour {
         
         ChangeHoldedItem(1);
     }
+
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent<Item_info>(out Item_info item_info)) {
@@ -135,6 +134,13 @@ public class Inventory_System : MonoBehaviour {
 
     public seed GetSeed() {
         return Planttest[SeedNumber];
+    }
+
+
+    public void UpgradeBundleUI() {
+        for (int i = 0; i < Planttest.Count; i++) {
+            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Planttest[i].plant.GetPlantIcon();
+        }
     }
 }
 
