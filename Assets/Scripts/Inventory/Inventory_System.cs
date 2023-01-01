@@ -16,7 +16,7 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private Transform point;
     [SerializeField] private Vector3 hitboxSize;
     public GameObject Bundle;
-    private int SeedNumber;
+    public int SeedNumber;
 
     private void Start() {
         UpgradeBundleUI();
