@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Inventory_System : MonoBehaviour {
     public static Inventory_System Instance;
 
-    public List<seed> Planttest = new List<seed>();
+    public List<seed> Planttest = new List<seed>();//nazwa do zmiany
     [SerializeField] private List<Items> Eq = new List<Items>();
     [SerializeField] private Items currentItem;
     [SerializeField] private GameObject UI_Eq;
@@ -19,7 +19,6 @@ public class Inventory_System : MonoBehaviour {
     public int SeedNumber;
 
     private void Start() {
-        UpgradeBundleUI();
 
         if (Instance is null) {
             Instance = this;
@@ -43,7 +42,7 @@ public class Inventory_System : MonoBehaviour {
                 handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[0].Texture);
             }
         }
-        
+        UpdateBundleUI();
         ChangeHoldedItem(1);
     }
 
@@ -137,12 +136,19 @@ public class Inventory_System : MonoBehaviour {
     }
 
 
-    public void UpgradeBundleUI() {
+    public void UpdateBundleUI() {
         Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         for (int i = 0; i < Planttest.Count; i++) {
             Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Planttest[i].plant.GetPlantIcon();
         }
     }
+
+    public void AddSeedToInv(seed newSeed)
+    {
+        Planttest.Add(newSeed);
+        UpdateBundleUI();
+    }
+    
 }
 
 [System.Serializable]
