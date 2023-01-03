@@ -138,6 +138,7 @@ public class Inventory_System : MonoBehaviour {
 
 
     public void UpgradeBundleUI() {
+        Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         for (int i = 0; i < Planttest.Count; i++) {
             Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Planttest[i].plant.GetPlantIcon();
         }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlantData : ScriptableObject
 {
     [SerializeField] public string plantName = "default plant";
-    [SerializeField] public Sprite plantIcon;
+    [SerializeField] public Sprite seedIcon;
     [SerializeField] public Texture[] plantTextures;
     [SerializeField] public int plantGrowthTime = 20;
     public string GetPlantName()
@@ -15,7 +15,7 @@ public class PlantData : ScriptableObject
     }
     public Sprite GetPlantIcon()
     {
-        return plantIcon;
+        return seedIcon;
     }
     public Texture GetPlantTexture(int id)
     {

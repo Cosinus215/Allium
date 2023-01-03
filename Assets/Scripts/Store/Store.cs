@@ -15,29 +15,29 @@ public class Store : MonoBehaviour {
     }
 
     public void Buy() {
-        SeedInfo thisBtn = EventSystem.current.currentSelectedGameObject.GetComponent<SeedInfo>();
+        PlantData Seedinfo = EventSystem.current.currentSelectedGameObject.GetComponent<SeedInfo>().Seed;
 
-        PlantData Seed = ScriptableObject.CreateInstance<PlantData>();
+        int seed_inventory_index = FindSeedIndexInInv(Seedinfo);
 
-        Seed.plantName = thisBtn.SeedName;
-        Seed.plantIcon = thisBtn.SeedIcon;
-        Seed.plantTextures = thisBtn.plantTextures;
-        Seed.plantGrowthTime = thisBtn.plantGrowthTime;
+        if (seed_inventory_index == -1) {
+            seed NewSeed = new seed();
+            NewSeed.plant = Seedinfo;
+            NewSeed.number = 1;
+            Inventory_System.Instance.Planttest.Add(NewSeed);
+            Inventory_System.Instance.UpgradeBundleUI();
 
-        for (int i = 0; i < Inventory_System.Instance.Planttest.Count; i++) {
-            if (Seed.plantName == Inventory_System.Instance.Planttest[i].plant.plantName) {
-                Inventory_System.Instance.Planttest[i].number++;
-                return;
-            } 
-            if (i+1 == Inventory_System.Instance.Planttest.Count) {
-                seed NewSeed = new seed();
-                NewSeed.plant = Seed;
-                NewSeed.number = 1;
-                Inventory_System.Instance.Planttest.Add(NewSeed);
+        } else {
+            Inventory_System.Instance.Planttest[seed_inventory_index].number++;
+        }
+    }
 
-                Inventory_System.Instance.UpgradeBundleUI();
-                return;
+    private int FindSeedIndexInInv(PlantData Plant_data) {
+        for (int i = 0; i < Inventory_System.Instance.Planttest.Count; ++i) {
+            if (Plant_data.plantName == Inventory_System.Instance.Planttest[i].plant.plantName) {
+                return i;
             }
         }
+        // C# nullable method
+        return -1;
     }
 }
