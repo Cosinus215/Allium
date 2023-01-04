@@ -19,9 +19,9 @@ public class Store : MonoBehaviour {
         StoreUI.SetActive(false);
     }
 
-    public void Buy(int id) 
+    public void Buy(seed s) 
     {
-        PlantData Seedinfo = magazyn[id].plant;
+        PlantData Seedinfo = s.plant;
         //czy mamy kasê
         int seed_inventory_index = FindSeedIndexInInv(Seedinfo);
 
@@ -51,12 +51,18 @@ public class Store : MonoBehaviour {
     }
     private void UpdateStoreUI()
     {
+        foreach(Transform child in StoreUI.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+
         foreach(seed s in magazyn)
         {
             Button b = Instantiate(buttonPref, StoreUI.transform);
             b.GetComponent<Image>().sprite = s.plant.seedIcon;
-            //b.onClick.AddListener....
+            b.GetComponent<SeedInfo>().Seed = s.plant;
+            b.onClick.AddListener(delegate { Buy(s); });
 
         }
+
     }
 }
