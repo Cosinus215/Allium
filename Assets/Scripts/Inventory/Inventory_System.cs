@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 public class Inventory_System : MonoBehaviour {
     public static Inventory_System Instance;
 
-    public List<seed> Planttest = new List<seed>();//nazwa do zmiany
+    public List<seed> Bundle_Inv = new List<seed>();
     [SerializeField] private List<Items> Eq = new List<Items>();
     [SerializeField] private Items currentItem;
     [SerializeField] private GameObject UI_Eq;
@@ -15,8 +16,10 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private GameObject handPlace;
     [SerializeField] private Transform point;
     [SerializeField] private Vector3 hitboxSize;
+    [SerializeField] private Coins Coin;
+    [SerializeField] private TextMeshProUGUI MoneyUI;
+    [HideInInspector] public int SeedNumber;
     public GameObject Bundle;
-    public int SeedNumber;
 
     private void Start() {
 
@@ -42,6 +45,8 @@ public class Inventory_System : MonoBehaviour {
                 handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[0].Texture);
             }
         }
+
+        UpdateMoneyUI();
         UpdateBundleUI();
         ChangeHoldedItem(1);
     }
@@ -132,23 +137,58 @@ public class Inventory_System : MonoBehaviour {
     }
 
     public seed GetSeed() {
-        return Planttest[SeedNumber];
+        return Bundle_Inv[SeedNumber];
     }
 
 
     public void UpdateBundleUI() {
-        Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        for (int i = 0; i < Planttest.Count; i++) {
-            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Planttest[i].plant.GetPlantIcon();
+        for (int i = 0; i < Bundle_Inv.Count; i++) {
+            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Bundle_Inv[i].plant.GetPlantIcon();
         }
+    }
+
+    public void Buy(int id) { 
+        PlantData Seedinfo = Store.Instance.magazyn[id].plant;
+
+        //czy mamy kasê
+        if (Coin.Money >= Seedinfo.Price) {
+            int seed_inventory_index = FindSeedIndexInInv(Seedinfo);
+
+            if (seed_inventory_index == -1) {
+                seed NewSeed = new seed();
+                NewSeed.plant = Seedinfo;
+                NewSeed.number = 1;
+                AddSeedToInv(NewSeed);
+            } else {
+                Bundle_Inv[seed_inventory_index].number++;
+            }
+            Coin.Money -= Seedinfo.Price;
+            UpdateMoneyUI();
+
+        } else {
+            Debug.Log("You have too little money");
+        }
+    }
+
+    private int FindSeedIndexInInv(PlantData Plant_data) {
+        for (int i = 0; i < Bundle_Inv.Count; ++i) {
+            if (Plant_data.plantName == Bundle_Inv[i].plant.plantName) {
+                return i;
+            }
+        }
+        // Ni ma OK
+        return -1;
     }
 
     public void AddSeedToInv(seed newSeed)
     {
-        Planttest.Add(newSeed);
+        Bundle_Inv.Add(newSeed);
         UpdateBundleUI();
     }
     
+    public void UpdateMoneyUI() {
+        MoneyUI.SetText($"Your Money: {Coin.Money}");
+    }
 }
 
 [System.Serializable]

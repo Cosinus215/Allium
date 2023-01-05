@@ -9,6 +9,7 @@ public class PlantData : ScriptableObject
     [SerializeField] public Sprite seedIcon;
     [SerializeField] public Texture[] plantTextures;
     [SerializeField] public int plantGrowthTime = 20;
+    public int Price;
     public string GetPlantName()
     {
         return plantName;

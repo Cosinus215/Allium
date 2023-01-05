@@ -20,3 +20,4 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 15ee7cafaf2c7534b9f536e2dfd25304, type: 3}
   - {fileID: 2800000, guid: bdf6704561203c241a18f42cda6b4e77, type: 3}
   plantGrowthTime: 200
+  Price: 1
