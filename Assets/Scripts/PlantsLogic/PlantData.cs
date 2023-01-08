@@ -5,17 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Plants/Plant data", fileName = "NewPlantData")]
 public class PlantData : ScriptableObject
 {
-    [SerializeField] private string plantName = "default plant";
-    [SerializeField] private Sprite plantIcon;
-    [SerializeField] private Texture[] plantTextures;
-    [SerializeField] private int plantGrowthTime = 20;
+    [SerializeField] public string plantName = "default plant";
+    [SerializeField] public Sprite seedIcon;
+    [SerializeField] public Texture[] plantTextures;
+    [SerializeField] public int plantGrowthTime = 20;
+    public int Price;
     public string GetPlantName()
     {
         return plantName;
     }
     public Sprite GetPlantIcon()
     {
-        return plantIcon;
+        return seedIcon;
     }
     public Texture GetPlantTexture(int id)
     {
