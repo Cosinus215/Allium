@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class Plant
@@ -80,7 +83,7 @@ public class Plant
                 currentPlantState = PlantState.ReadyToHarvest;
                 Debug.Log($"{plantData.GetPlantName()} is ready to harvest!");
             }
-        }
-        UpdateGraphic(targetGraphic);
     }
+        UpdateGraphic(targetGraphic);
+}
 }

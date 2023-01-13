@@ -82,10 +82,7 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
                 return true;
 
             case Items.Type.Bundle:
-
-
                 seed seedling = Inventory_System.Instance.GetSeed();
-                Debug.Log(seedling);
 
                 if (seedling != null && seedling.number > 0) {
                     if (SetPlantData(seedling.plant)) {
@@ -107,5 +104,9 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
                 Debug.Log("Shitty item");
                 return false;
         }
+    }
+    public Plant GetCurrentPlant()
+    {
+        return currentPlant;
     }
 }
