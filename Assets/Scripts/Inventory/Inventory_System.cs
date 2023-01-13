@@ -13,6 +13,7 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private Items currentItem;
     [SerializeField] private GameObject UI_Eq;
     [SerializeField] private GameObject selectingSquare;
+    [SerializeField] private GameObject Bundle_Selecting_Square;
     [SerializeField] private GameObject handPlace;
     [SerializeField] private Transform point;
     [SerializeField] private Vector3 hitboxSize;
@@ -134,6 +135,8 @@ public class Inventory_System : MonoBehaviour {
 
     public void GetSeedNumber(int i) {
         SeedNumber = i;
+        Bundle_Selecting_Square.transform.parent = Bundle.transform.GetChild(i);
+        Bundle_Selecting_Square.transform.localPosition = Vector2.zero;
     }
 
     public seed GetSeed() {
