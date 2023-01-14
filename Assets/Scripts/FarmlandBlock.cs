@@ -8,9 +8,8 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject plantRoot;
     private Renderer plantMaterial;
-    [SerializeField] private PlantData plantDataSZABLON;
-    [SerializeField] private Plant currentPlant;
-    [SerializeField] private int waterLevel = 0;
+    private Plant currentPlant;
+    private int waterLevel = 0;
 
     private void Awake()
     {
@@ -18,7 +17,6 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
-        SetPlantData(plantDataSZABLON);
     }
     public bool SetPlantData(PlantData newPlantData) 
     {
@@ -45,20 +43,24 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
         waterLevel += additionalWater;
         waterLevel = Mathf.Clamp(waterLevel,0,101);
     }
-    public void OnTick()
+    public void OnTick(int t)
     {
-        if (GameManager.Instance.currentWeather.isWatering)
+        if (t>0)
         {
-            WaterBlock(10);
+            if (GameManager.Instance.currentWeather.isWatering)
+            {
+                WaterBlock(10);
+            }
+            else
+            {
+                WaterBlock(-1);
+            }
         }
-        else
-        {
-            WaterBlock(-1);
-        }
+        
 
         if (currentPlant != null && waterLevel >= 0)
         {
-            currentPlant.OnTick(plantMaterial);
+            currentPlant.OnTick(plantMaterial, t);
         }
     }
     public bool Interact(Items item = null)
@@ -108,5 +110,22 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     public Plant GetCurrentPlant()
     {
         return currentPlant;
+    }
+    public int GetWaterLevel()
+    {
+        return waterLevel;
+    }
+    public void SetFarmlandBlock(FarmlandBlockSaveData fbsd)
+    {
+        if(fbsd.plantID != -1)
+        {
+            SetPlantData(GameManager.Instance.GetPlantDataByID(fbsd.plantID));
+            currentPlant.SetPlantAge(fbsd.plantAge);
+        }
+        else
+        {
+            SetPlantData(null);
+        }
+        waterLevel = fbsd.waterLevel;
     }
 }

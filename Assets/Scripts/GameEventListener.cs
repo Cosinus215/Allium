@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class GameEventListener : MonoBehaviour
 {
     public GameEvent Event;
-    public UnityEvent Response;
+    public MyIntEvent Response;
 
     private void OnEnable()
     { 
@@ -18,8 +18,12 @@ public class GameEventListener : MonoBehaviour
         Event.UnregisterListener(this); 
     }
 
-    public void OnEventRaised()
+    public void OnEventRaised(int ticks)
     { 
-        Response.Invoke(); 
+        Response.Invoke(ticks); 
     }
+}
+[System.Serializable]
+public class MyIntEvent : UnityEvent<int>
+{
 }

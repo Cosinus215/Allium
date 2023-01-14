@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     private const uint WEATHER_MIN_UPDATE_TRESHOLD = 5;
     private const uint WEATHER_MAX_UPDATE_TRESHOLD = 10;
 
-    public SaveFile sv;
+    public SaveFile sv;//potem to wywaliæ - na razie do debugowania i pobiera sporo pamiêci tak jak ta linijka
     public string path;
     private void Start()
     {
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
             HandleDayCycle();
 
-            tickEvent.Raise();
+            tickEvent.Raise(1);
             yield return tickTime;
         }
     }
@@ -122,17 +122,13 @@ public class GameManager : MonoBehaviour
     [ContextMenu("Save game")]
     public void SaveGame()
     {
-        List<Plant> plants = new List<Plant>();
-        foreach(FarmlandBlock fb in FindObjectsOfType<FarmlandBlock>())
+        List<FarmlandBlockSaveData> blocksData = new List<FarmlandBlockSaveData>();
+        foreach (FarmlandBlock fb in FindObjectsOfType<FarmlandBlock>())
         {
-            Plant p = fb.GetCurrentPlant();
-            if (p!=null)
-            {
-                plants.Add(p);
-            }
+            blocksData.Add(new FarmlandBlockSaveData(fb));
         }
 
-        sv = new SaveFile(plants);
+        sv = new SaveFile(blocksData);
         
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(path, FileMode.Create);
@@ -179,7 +175,18 @@ public class GameManager : MonoBehaviour
         {
             Inventory_System.Instance.AddSeedToInv(new seed(ssd));
         }
+
+        FarmlandBlock[] fb = FindObjectsOfType<FarmlandBlock>();
+        for (int i=0; i< fb.Length && i<sv.blocks.Count;i++ )
+        {
+            fb[i].SetFarmlandBlock(sv.blocks[i]);
+        }
+
         int ticksPassed = (int)Math.Abs((DateTime.Now - sv.saveTime).TotalSeconds);
+
+        //robimy to teraz bo przy okazji aktualizuje siê wygl¹d roœlin
+        tickEvent.Raise(ticksPassed);
+
         Debug.Log($"Ticks passed {ticksPassed}");
         plik.Close();
     }
