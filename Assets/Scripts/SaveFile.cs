@@ -6,21 +6,21 @@ using UnityEngine;
 [System.Serializable]
 public class SaveFile
 {
-    //public DateTime saveTime;
+    public DateTime saveTime;
     public List<SeedSaveData> seeds;
     //public List<Plant> plants;
-    //public int money;
+    public int money;
 
     public SaveFile(List<Plant> plantsToSave)
     {
-        //saveTime = DateTime.Now;
+        saveTime = DateTime.Now;
         seeds = new List<SeedSaveData>();
         foreach (seed s in Inventory_System.Instance.Bundle_Inv)
         {
             seeds.Add(new SeedSaveData(s));
         }
         //plants = plantsToSave;
-        //money= Inventory_System.Instance.GetMoneyAmout();
+        money= Inventory_System.Instance.GetMoneyAmout();
     }
 
 }

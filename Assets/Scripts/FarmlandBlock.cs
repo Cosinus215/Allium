@@ -63,7 +63,7 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     }
     public bool Interact(Items item = null)
     {
-        Debug.Log($"Interaction with: {name}");
+        //Debug.Log($"Interaction with: {name}");
         switch (item.itemType) 
         {
             case Items.Type.Axe:

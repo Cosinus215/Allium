@@ -135,8 +135,9 @@ public class GameManager : MonoBehaviour
         sv = new SaveFile(plants);
         
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(path, FileMode.CreateNew);
+        FileStream file = File.Open(path, FileMode.Create);
         Debug.LogWarning(path);
+
         bf.Serialize(file, sv);
         file.Close();
     }
@@ -167,19 +168,19 @@ public class GameManager : MonoBehaviour
             plik.Close();
             return;
         }
-        if (sv != null)
-        {
-            Inventory_System.Instance.ClearSeedEq();
-            foreach (SeedSaveData ssd in sv.seeds)
-            {
-                Inventory_System.Instance.AddSeedToInv(new seed(ssd));
-            }
-        }
-        else
+        if (sv == null)
         {
             Debug.LogError("Class is damaged!");
+            return;
         }
 
+        Inventory_System.Instance.ClearSeedEq();
+        foreach (SeedSaveData ssd in sv.seeds)
+        {
+            Inventory_System.Instance.AddSeedToInv(new seed(ssd));
+        }
+        int ticksPassed = (int)Math.Abs((DateTime.Now - sv.saveTime).TotalSeconds);
+        Debug.Log($"Ticks passed {ticksPassed}");
         plik.Close();
     }
 
