@@ -95,6 +95,8 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
                             Inventory_System.Instance.Bundle.transform.
                                 GetChild(Inventory_System.Instance.SeedNumber)
                                 .GetComponent<Image>().sprite = null;
+
+                            Inventory_System.Instance.Bundle_Inv.RemoveAt(Inventory_System.Instance.SeedNumber);
                         }
                         return true;
                     } else {
