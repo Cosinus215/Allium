@@ -90,6 +90,7 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
                 if (seedling != null && seedling.number > 0) {
                     if (SetPlantData(seedling.plant)) {
                         seedling.number--;
+                        Inventory_System.Instance.Update_Number_BundleUI(Inventory_System.Instance.SeedNumber);
                         if (seedling.number == 0) {
                             Inventory_System.Instance.Bundle.transform.
                                 GetChild(Inventory_System.Instance.SeedNumber)

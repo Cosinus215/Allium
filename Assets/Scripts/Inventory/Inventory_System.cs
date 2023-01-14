@@ -163,13 +163,23 @@ public class Inventory_System : MonoBehaviour {
                 NewSeed.number = 1;
                 AddSeedToInv(NewSeed);
             } else {
+
                 Bundle_Inv[seed_inventory_index].number++;
             }
             Coin.Money -= Seedinfo.Price;
             UpdateMoneyUI();
+            Update_Number_BundleUI(id);
 
         } else {
             Debug.Log("You have too little money");
+        }
+    }
+
+    public void Update_Number_BundleUI(int id) {
+        TextMeshProUGUI number = Bundle.transform.GetChild(id).GetComponentInChildren<TextMeshProUGUI>();
+        number.SetText(Bundle_Inv[id].number.ToString());
+        if (Bundle_Inv[id].number == 0) {
+            number.SetText("");
         }
     }
 
