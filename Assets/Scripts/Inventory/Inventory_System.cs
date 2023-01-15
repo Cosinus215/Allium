@@ -119,6 +119,9 @@ public class Inventory_System : MonoBehaviour {
                 if (hit[i].gameObject.TryGetComponent(out IInteractable inter))
                 {
                     bool b = inter.Interact(currentItem);
+                    if (b) {
+                        UpdateBundleUI();
+                    }
                     return;
                 }
             }
@@ -135,18 +138,34 @@ public class Inventory_System : MonoBehaviour {
 
     public void GetSeedNumber(int i) {
         SeedNumber = i;
-        Bundle_Selecting_Square.transform.parent = Bundle.transform.GetChild(i);
+        Bundle_Selecting_Square.transform.SetParent(Bundle.transform.GetChild(i));
         Bundle_Selecting_Square.transform.localPosition = Vector2.zero;
     }
 
     public seed GetSeed() {
-        return Bundle_Inv[SeedNumber];
+        if (SeedNumber < Bundle_Inv.Count) {
+            return Bundle_Inv[SeedNumber];
+        }
+        return null;
     }
 
 
     public void UpdateBundleUI() {
-        for (int i = 0; i < Bundle_Inv.Count; i++) {
-            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Bundle_Inv[i].plant.GetPlantIcon();
+        for (int i = 0; i < 9; i++) {
+            TextMeshProUGUI number = Bundle.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>();
+
+            if (i < Bundle_Inv.Count) {
+                Bundle.transform.GetChild(i).GetComponent<Image>().sprite = 
+                    Bundle_Inv[i].plant.GetPlantIcon();
+
+                number.SetText(Bundle_Inv[i].number.ToString());
+                if (Bundle_Inv[i].number == 0) {
+                    number.SetText("");
+                }
+            } else {
+                Bundle.transform.GetChild(i).GetComponent<Image>().sprite = null;
+                number.SetText("");
+            }
         }
     }
 
@@ -168,18 +187,10 @@ public class Inventory_System : MonoBehaviour {
             }
             Coin.Money -= Seedinfo.Price;
             UpdateMoneyUI();
-            Update_Number_BundleUI(id);
+            UpdateBundleUI();
 
         } else {
             Debug.Log("You have too little money");
-        }
-    }
-
-    public void Update_Number_BundleUI(int id) {
-        TextMeshProUGUI number = Bundle.transform.GetChild(id).GetComponentInChildren<TextMeshProUGUI>();
-        number.SetText(Bundle_Inv[id].number.ToString());
-        if (Bundle_Inv[id].number == 0) {
-            number.SetText("");
         }
     }
 
@@ -196,7 +207,6 @@ public class Inventory_System : MonoBehaviour {
     public void AddSeedToInv(seed newSeed)
     {
         Bundle_Inv.Add(newSeed);
-        UpdateBundleUI();
     }
     
     public void UpdateMoneyUI() {

@@ -43,10 +43,16 @@ public class Store : MonoBehaviour {
         foreach(seed s in magazyn)
         {
             int temp = number;
+            if (!buttonPref) {
+                Debug.LogWarning("Nie ma prefaba");
+                return; 
+            }
             GameObject gameobj = Instantiate(buttonPref, store_Place.transform);
-
-            //Lepsze to czy Button b = gameobj.GetComponenInChildrent<Button>();  ??
             Button b = gameobj.transform.GetChild(0).GetComponent<Button>();
+            if (!b) {
+                Debug.LogWarning("Nie ma buttona");
+                return; 
+            }
 
             b.GetComponent<Image>().sprite = s.plant.seedIcon;
             b.GetComponent<SeedInfo>().Seed = s.plant;
