@@ -139,6 +139,8 @@ public class Inventory_System : MonoBehaviour {
 
     public void GetSeedNumber(int i) {
         SeedNumber = i;
+        Bundle_Selecting_Square.transform.SetParent(Bundle.transform.GetChild(i));
+        Bundle_Selecting_Square.transform.localPosition = Vector2.zero;
     }
 
     public seed GetSeed() {
@@ -150,8 +152,21 @@ public class Inventory_System : MonoBehaviour {
     }
 
     public void UpdateBundleUI() {
-        for (int i = 0; i < Bundle_Inv.Count; i++) {
-            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Bundle_Inv[i].plant.GetPlantIcon();
+        for (int i = 0; i < 9; i++) {
+            TextMeshProUGUI number = Bundle.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>();
+
+            if (i < Bundle_Inv.Count) {
+                Bundle.transform.GetChild(i).GetComponent<Image>().sprite =
+                    Bundle_Inv[i].plant.GetPlantIcon();
+
+                number.SetText(Bundle_Inv[i].number.ToString());
+                if (Bundle_Inv[i].number == 0) {
+                    number.SetText("");
+                }
+            } else {
+                Bundle.transform.GetChild(i).GetComponent<Image>().sprite = null;
+                number.SetText("");
+            }
         }
     }
 
