@@ -9,6 +9,7 @@ public class PlantData : ScriptableObject
     [SerializeField] public Sprite seedIcon;
     [SerializeField] public Texture[] plantTextures;
     [SerializeField] public int plantGrowthTime = 20;
+    [SerializeField] private int plantGameID = 0;
     public int Price;
     public string GetPlantName()
     {
@@ -31,5 +32,12 @@ public class PlantData : ScriptableObject
     {
         return plantGrowthTime;
     }
-
+    public void SetPlantID(int id)
+    {
+        plantGameID = id;
+    }
+    public int GetPlantID()
+    {
+        return plantGameID;
+    }
 }

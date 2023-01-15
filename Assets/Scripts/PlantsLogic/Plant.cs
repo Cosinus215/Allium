@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class Plant
@@ -67,11 +70,11 @@ public class Plant
         id = Mathf.Clamp(id, 0, stages - 1);
         return id;
     }
-    public void OnTick(Renderer targetGraphic)
+    public void OnTick(Renderer targetGraphic, int time)
     {
         if(plantData == null)return;
 
-        plantAge+= GameManager.SECONDS_PER_TICK;
+        plantAge+= time;
         if(plantAge >= plantData.GetPlantGrowthTime())
         {
             plantAge = plantData.GetPlantGrowthTime();
@@ -82,5 +85,13 @@ public class Plant
             }
         }
         UpdateGraphic(targetGraphic);
+}
+    public int GetPlantAge()
+    {
+        return plantAge;
+    }
+    public void SetPlantAge(int age)
+    {
+        plantAge = age;
     }
 }
