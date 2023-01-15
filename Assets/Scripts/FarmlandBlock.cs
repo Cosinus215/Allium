@@ -89,10 +89,10 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
                 if (seedling != null && seedling.number > 0) {
                     if (SetPlantData(seedling.plant)) {
                         seedling.number--;
-                        if (seedling.number == 0) {
-                            Inventory_System.Instance.Bundle.transform.
-                                GetChild(Inventory_System.Instance.SeedNumber)
-                                .GetComponent<Image>().sprite = null;
+
+                        if (seedling.number <= 0) {
+                            Inventory_System.Instance.Bundle_Inv
+                                .RemoveAt(Inventory_System.Instance.SeedNumber);
                         }
                         return true;
                     } else {

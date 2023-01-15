@@ -14,6 +14,7 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private Items currentItem;
     [SerializeField] private GameObject UI_Eq;
     [SerializeField] private GameObject selectingSquare;
+    [SerializeField] private GameObject Bundle_Selecting_Square;
     [SerializeField] private GameObject handPlace;
     [SerializeField] private Transform point;
     [SerializeField] private Vector3 hitboxSize;
@@ -119,6 +120,9 @@ public class Inventory_System : MonoBehaviour {
                 if (hit[i].gameObject.TryGetComponent(out IInteractable inter))
                 {
                     bool b = inter.Interact(currentItem);
+                    if (b) {
+                        UpdateBundleUI();
+                    }
                     return;
                 }
             }
@@ -135,6 +139,8 @@ public class Inventory_System : MonoBehaviour {
 
     public void GetSeedNumber(int i) {
         SeedNumber = i;
+        Bundle_Selecting_Square.transform.SetParent(Bundle.transform.GetChild(i));
+        Bundle_Selecting_Square.transform.localPosition = Vector2.zero;
     }
 
     public seed GetSeed() {
@@ -145,17 +151,29 @@ public class Inventory_System : MonoBehaviour {
         return null;
     }
 
-
     public void UpdateBundleUI() {
-        for (int i = 0; i < Bundle_Inv.Count; i++) {
-            Bundle.transform.GetChild(i).GetComponent<Image>().sprite = Bundle_Inv[i].plant.GetPlantIcon();
+        for (int i = 0; i < 9; i++) {
+            TextMeshProUGUI number = Bundle.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>();
+
+            if (i < Bundle_Inv.Count) {
+                Bundle.transform.GetChild(i).GetComponent<Image>().sprite =
+                    Bundle_Inv[i].plant.GetPlantIcon();
+
+                number.SetText(Bundle_Inv[i].number.ToString());
+                if (Bundle_Inv[i].number == 0) {
+                    number.SetText("");
+                }
+            } else {
+                Bundle.transform.GetChild(i).GetComponent<Image>().sprite = null;
+                number.SetText("");
+            }
         }
     }
 
     public void Buy(int id) { 
         PlantData Seedinfo = Store.Instance.magazyn[id].plant;
 
-        //czy mamy kasê
+        //czy mamy kasÃª
         if (Coin.Money >= Seedinfo.Price) {
             int seed_inventory_index = FindSeedIndexInInv(Seedinfo);
 
@@ -165,10 +183,12 @@ public class Inventory_System : MonoBehaviour {
                 NewSeed.number = 1;
                 AddSeedToInv(NewSeed);
             } else {
+
                 Bundle_Inv[seed_inventory_index].number++;
             }
             Coin.Money -= Seedinfo.Price;
             UpdateMoneyUI();
+            UpdateBundleUI();
 
         } else {
             Debug.Log("You have too little money");

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -9,7 +10,8 @@ public class Store : MonoBehaviour {
     public static Store Instance;
 
     [SerializeField] private GameObject StoreUI;
-    [SerializeField] private Button buttonPref;
+    [SerializeField] private GameObject store_Place;
+    [SerializeField] private GameObject buttonPref;
     [HideInInspector] public List<seed> magazyn = new List<seed>();
 
     private void Start() {
@@ -33,7 +35,7 @@ public class Store : MonoBehaviour {
 
     private void UpdateStoreUI()
     {
-        foreach(Transform child in StoreUI.transform) {
+        foreach(Transform child in store_Place.transform) {
             GameObject.Destroy(child.gameObject);
         }
 
@@ -41,9 +43,20 @@ public class Store : MonoBehaviour {
         foreach(seed s in magazyn)
         {
             int temp = number;
-            Button b = Instantiate(buttonPref, StoreUI.transform);
+            if (!buttonPref) {
+                Debug.LogWarning("Nie ma prefaba");
+                return; 
+            }
+            GameObject gameobj = Instantiate(buttonPref, store_Place.transform);
+            Button b = gameobj.transform.GetChild(0).GetComponent<Button>();
+            if (!b) {
+                Debug.LogWarning("Nie ma buttona");
+                return; 
+            }
+
             b.GetComponent<Image>().sprite = s.plant.seedIcon;
             b.GetComponent<SeedInfo>().Seed = s.plant;
+            b.transform.Find("Price").GetComponent<TextMeshProUGUI>().SetText(s.plant.Price.ToString());
             b.onClick.AddListener(delegate { Inventory_System.Instance.Buy(temp); });
             number++;
         }
