@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using NUnit.Framework.Constraints;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +13,7 @@ public class GameManager : MonoBehaviour
     public const int SECONDS_PER_TICK = 1;
     private WaitForSeconds tickTime = new WaitForSeconds(SECONDS_PER_TICK);
     [SerializeField] private GameEvent tickEvent;
+    [SerializeField] private PlantList plantsList;
 
     [Header("Time")]
     [SerializeField, Range(0,24)] private byte dayTick = 0;
@@ -25,6 +29,9 @@ public class GameManager : MonoBehaviour
 
     private const uint WEATHER_MIN_UPDATE_TRESHOLD = 5;
     private const uint WEATHER_MAX_UPDATE_TRESHOLD = 10;
+
+    public SaveFile sv;//potem to wywaliæ - na razie do debugowania i pobiera sporo pamiêci tak jak ta linijka
+    public string path;
     private void Start()
     {
         if(Instance != null)
@@ -36,6 +43,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        path = Application.persistentDataPath + "/save.fly";
         //Internal game timer
         StartCoroutine(GameTick());
     }
@@ -54,7 +62,7 @@ public class GameManager : MonoBehaviour
 
             HandleDayCycle();
 
-            tickEvent.Raise();
+            tickEvent.Raise(1);
             yield return tickTime;
         }
     }
@@ -103,6 +111,86 @@ public class GameManager : MonoBehaviour
     {
         return currentWeather;
     }
+    public PlantData GetPlantDataByID(int id)
+    {
+        if(plantsList != null & plantsList.Plants.Count > id)
+        {
+            return plantsList.Plants[id];
+        }
+        return null;
+    }
+    [ContextMenu("Save game")]
+    public void SaveGame()
+    {
+        List<FarmlandBlockSaveData> blocksData = new List<FarmlandBlockSaveData>();
+        foreach (FarmlandBlock fb in FindObjectsOfType<FarmlandBlock>())
+        {
+            blocksData.Add(new FarmlandBlockSaveData(fb));
+        }
+
+        sv = new SaveFile(blocksData);
+        
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(path, FileMode.Create);
+        Debug.LogWarning(path);
+
+        bf.Serialize(file, sv);
+        file.Close();
+    }
+    [ContextMenu("Load game")]
+    public void LoadGame()
+    {
+        if (!File.Exists(path))
+        { 
+            Debug.Log("No savefile!"); 
+            return;
+        }
+        FileStream plik = File.Open(path, FileMode.Open);
+
+        if (plik.Length <= 0)
+        {
+            Debug.Log("Savefile empty!");
+            return;
+        }
+    
+        BinaryFormatter bf = new BinaryFormatter();
+        try
+        {
+            sv = (SaveFile)bf.Deserialize(plik);           
+        }
+        catch
+        {
+            Debug.LogError("File is damaged!");
+            plik.Close();
+            return;
+        }
+        if (sv == null)
+        {
+            Debug.LogError("Class is damaged!");
+            return;
+        }
+
+        Inventory_System.Instance.ClearSeedEq();
+        foreach (SeedSaveData ssd in sv.seeds)
+        {
+            Inventory_System.Instance.AddSeedToInv(new seed(ssd));
+        }
+
+        FarmlandBlock[] fb = FindObjectsOfType<FarmlandBlock>();
+        for (int i=0; i< fb.Length && i<sv.blocks.Count;i++ )
+        {
+            fb[i].SetFarmlandBlock(sv.blocks[i]);
+        }
+
+        int ticksPassed = (int)Math.Abs((DateTime.Now - sv.saveTime).TotalSeconds);
+
+        //robimy to teraz bo przy okazji aktualizuje siê wygl¹d roœlin
+        tickEvent.Raise(ticksPassed);
+
+        Debug.Log($"Ticks passed {ticksPassed}");
+        plik.Close();
+    }
+
     //Metoda wykonywana nawet w edytorze - mo¿emy mieæ podgl¹d nawet poza gr¹!
     public void OnValidate()
     {

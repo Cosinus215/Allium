@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -91,7 +92,8 @@ public class Inventory_System : MonoBehaviour {
     
     private void ChangeHoldedItem(int itemID)
     {
-        selectingSquare.transform.parent = UI_Eq.transform.GetChild(itemID - 1);
+        //selectingSquare.transform.parent = UI_Eq.transform.GetChild(itemID - 1);
+        selectingSquare.transform.SetParent(UI_Eq.transform.GetChild(itemID - 1));
         selectingSquare.transform.localPosition = Vector2.zero;
 
         if (itemID <= Eq.Count)
@@ -112,7 +114,6 @@ public class Inventory_System : MonoBehaviour {
         if (context.started && point)
         {
             Collider[] hit = Physics.OverlapBox(point.position, hitboxSize);
-            Debug.Log($"Used: {currentItem.Name} {hit[0]}");
             for (int i = 0;i < hit.Length; ++i) 
             {
                 
@@ -141,7 +142,11 @@ public class Inventory_System : MonoBehaviour {
     }
 
     public seed GetSeed() {
-        return Bundle_Inv[SeedNumber];
+        if (Bundle_Inv.Count > 0 && SeedNumber< Bundle_Inv.Count)
+        {
+            return Bundle_Inv[SeedNumber];
+        }
+        return null;
     }
 
     public void UpdateBundleUI() {
@@ -153,7 +158,7 @@ public class Inventory_System : MonoBehaviour {
     public void Buy(int id) { 
         PlantData Seedinfo = Store.Instance.magazyn[id].plant;
 
-        //czy mamy kasê
+        //czy mamy kasÃª
         if (Coin.Money >= Seedinfo.Price) {
             int seed_inventory_index = FindSeedIndexInInv(Seedinfo);
 
@@ -187,11 +192,27 @@ public class Inventory_System : MonoBehaviour {
 
     public void AddSeedToInv(seed newSeed)
     {
-        Bundle_Inv.Add(newSeed);
+        if(newSeed!=null && newSeed.plant != null)
+        {
+            Bundle_Inv.Add(newSeed);
+            UpdateBundleUI();
+        }
+        else
+        {
+            Debug.LogError("Broken seed!");
+        }  
     }
     
     public void UpdateMoneyUI() {
         MoneyUI.SetText($"Your Money: {Coin.Money}");
+    }
+    public int GetMoneyAmout()
+    {
+        return Coin.Money;
+    }
+    public void ClearSeedEq()
+    {
+        Bundle_Inv.Clear();
     }
 }
 
@@ -199,4 +220,14 @@ public class Inventory_System : MonoBehaviour {
 public class seed {
     public int number;
     public PlantData plant;
+
+    public seed()
+    {
+    }
+    public seed(SeedSaveData ssd)
+    {
+        this.number = ssd.plantID;
+        this.plant = GameManager.Instance.GetPlantDataByID(ssd.plantID);
+    }
+
 }
