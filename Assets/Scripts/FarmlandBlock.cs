@@ -17,7 +17,18 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
+
     }
+
+    void Update() {
+        if (waterLevel == 0 && currentPlant != null) {
+            plantRoot.GetComponentInChildren<MeshRenderer>().sharedMaterial.color = Color.yellow;
+        } else {
+            plantRoot.GetComponentInChildren<MeshRenderer>().sharedMaterial.color = Color.white;
+
+        }
+    }
+
     public bool SetPlantData(PlantData newPlantData) 
     {
         if(newPlantData != null) 
