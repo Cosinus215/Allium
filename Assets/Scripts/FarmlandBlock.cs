@@ -17,16 +17,6 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
         }
-
-    }
-
-    void Update() {
-        if (waterLevel == 0 && currentPlant != null) {
-            plantRoot.GetComponentInChildren<MeshRenderer>().sharedMaterial.color = Color.yellow;
-        } else {
-            plantRoot.GetComponentInChildren<MeshRenderer>().sharedMaterial.color = Color.white;
-
-        }
     }
 
     public bool SetPlantData(PlantData newPlantData) 
@@ -56,6 +46,8 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     }
     public void OnTick(int t)
     {
+        SetPlantColor();
+
         if (t>0)
         {
             if (GameManager.Instance.currentWeather.isWatering)
@@ -74,6 +66,19 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
             currentPlant.OnTick(plantMaterial, t);
         }
     }
+
+    private void SetPlantColor() {
+        if (currentPlant == null) {
+            return;
+        }
+
+        if (waterLevel == 0) {
+            plantMaterial.material.color = Color.yellow;
+        } else {
+            plantMaterial.material.color = Color.white;
+        }
+    }
+
     public bool Interact(Items item = null)
     {
         //Debug.Log($"Interaction with: {name}");
