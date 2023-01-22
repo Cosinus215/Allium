@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     private CharacterController characterController;
-    private Vector2 movementVector;
+    public Vector2 movementVector;
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
