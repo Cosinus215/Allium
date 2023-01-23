@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     private CharacterController characterController;
-    public Vector2 movementVector;
+    private Vector2 movementVector;
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
@@ -20,9 +20,20 @@ public class Movement : MonoBehaviour
     private Vector3 directionLeft      = new Vector3(-1.5f, 0, 0);
     private Vector3 directionRight     = new Vector3(1.5f, 0, 0);
 
+    public PlayerInput input;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+    }
+
+    public void OnJoystick() {
+        input.neverAutoSwitchControlSchemes = true;
+        input.SwitchCurrentControlScheme(Gamepad.current);
+    }
+
+    public void NotOnJoystick() {
+        input.neverAutoSwitchControlSchemes = false;
     }
 
     public void PlayerMovement(InputAction.CallbackContext context)
