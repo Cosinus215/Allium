@@ -46,8 +46,6 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     }
     public void OnTick(int t)
     {
-        SetPlantColor();
-
         if (t>0)
         {
             if (GameManager.Instance.currentWeather.isWatering)
@@ -65,6 +63,8 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
         {
             currentPlant.OnTick(plantMaterial, t);
         }
+
+        SetPlantColor();
     }
 
     private void SetPlantColor() {
