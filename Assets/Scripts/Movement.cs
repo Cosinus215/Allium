@@ -24,15 +24,17 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        // TODO: na starcie sprawdza czy urzadzenie to telefon i jesli tak to ustawia gamepad jako control scheme
+        // Jesli to telefon to wlacza koleczko jesli nie to wylacza
         characterController = GetComponent<CharacterController>();
     }
 
-    public void OnJoystick() {
+    public void OnDrag() {
         input.neverAutoSwitchControlSchemes = true;
         input.SwitchCurrentControlScheme(Gamepad.current);
     }
 
-    public void NotOnJoystick() {
+    public void OnEndDrag() {
         input.neverAutoSwitchControlSchemes = false;
     }
 
