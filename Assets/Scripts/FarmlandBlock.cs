@@ -10,12 +10,15 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     private Renderer plantMaterial;
     private Plant currentPlant;
     private int waterLevel = 0;
+    [SerializeField] private Color healthColor;
+    [SerializeField] private Color dryColor;
 
     private void Awake()
     {
-        if(plantRoot                  is not                              null)
+        if (plantRoot                  is not                              null)
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
+            plantMaterial.material.EnableKeyword("_EMISSION");
         }
     }
 
@@ -73,9 +76,9 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
         }
 
         if (waterLevel == 0) {
-            plantMaterial.material.color = Color.yellow;
+            plantMaterial.material.SetColor("_EmissionColor", dryColor);
         } else {
-            plantMaterial.material.color = Color.white;
+            plantMaterial.material.SetColor("_EmissionColor", healthColor);
         }
     }
 
