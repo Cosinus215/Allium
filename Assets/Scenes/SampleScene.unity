@@ -1029,6 +1029,11 @@ PrefabInstance:
       propertyPath: input
       value: 
       objectReference: {fileID: 1697619308}
+    - target: {fileID: 2536151851006579687, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
+        type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 1509550095}
     - target: {fileID: 2536151851006579704, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
         type: 3}
       propertyPath: m_Camera

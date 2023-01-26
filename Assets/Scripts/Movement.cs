@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
     [SerializeField] private GameObject Octi;
+    [SerializeField] private GameObject joystick;
 
     private Quaternion rotationLeft    = new Quaternion(0, 0, 0, 0);
     private Quaternion rotationRight   = new Quaternion(0, 180, 0, 0);
@@ -20,22 +21,19 @@ public class Movement : MonoBehaviour
     private Vector3 directionLeft      = new Vector3(-1.5f, 0, 0);
     private Vector3 directionRight     = new Vector3(1.5f, 0, 0);
 
-    public PlayerInput input;
+    [SerializeField] private PlayerInput input;
 
     void Start()
     {
-        // TODO: na starcie sprawdza czy urzadzenie to telefon i jesli tak to ustawia gamepad jako control scheme
-        // Jesli to telefon to wlacza koleczko jesli nie to wylacza
+        if (Application.platform == RuntimePlatform.Android) {
+            input.neverAutoSwitchControlSchemes = true;
+            input.SwitchCurrentControlScheme(Gamepad.current);
+            joystick.SetActive(true);
+        } else {
+            input.neverAutoSwitchControlSchemes = false;
+            joystick.SetActive(false);
+        }
         characterController = GetComponent<CharacterController>();
-    }
-
-    public void OnDrag() {
-        input.neverAutoSwitchControlSchemes = true;
-        input.SwitchCurrentControlScheme(Gamepad.current);
-    }
-
-    public void OnEndDrag() {
-        input.neverAutoSwitchControlSchemes = false;
     }
 
     public void PlayerMovement(InputAction.CallbackContext context)
