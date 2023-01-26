@@ -10,14 +10,18 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
     private Renderer plantMaterial;
     private Plant currentPlant;
     private int waterLevel = 0;
+    [SerializeField] private Color healthColor;
+    [SerializeField] private Color dryColor;
 
     private void Awake()
     {
-        if(plantRoot                  is not                              null)
+        if (plantRoot                  is not                              null)
         {
             plantMaterial = plantRoot.GetComponentInChildren<Renderer>();
+            plantMaterial.material.EnableKeyword("_EMISSION");
         }
     }
+
     public bool SetPlantData(PlantData newPlantData) 
     {
         if(newPlantData != null) 
@@ -62,7 +66,22 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
         {
             currentPlant.OnTick(plantMaterial, t);
         }
+
+        SetPlantColor();
     }
+
+    private void SetPlantColor() {
+        if (currentPlant == null) {
+            return;
+        }
+
+        if (waterLevel == 0) {
+            plantMaterial.material.SetColor("_EmissionColor", dryColor);
+        } else {
+            plantMaterial.material.SetColor("_EmissionColor", healthColor);
+        }
+    }
+
     public bool Interact(Items item = null)
     {
         //Debug.Log($"Interaction with: {name}");
