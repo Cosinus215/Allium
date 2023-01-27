@@ -7,10 +7,12 @@ public class Movement : MonoBehaviour
 {
     private CharacterController characterController;
     private Vector2 movementVector;
+    public Vector3 moveVector;
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
     [SerializeField] private GameObject Octi;
+    [SerializeField] private GameObject joystick;
 
     private Quaternion rotationLeft    = new Quaternion(0, 0, 0, 0);
     private Quaternion rotationRight   = new Quaternion(0, 180, 0, 0);
@@ -20,8 +22,18 @@ public class Movement : MonoBehaviour
     private Vector3 directionLeft      = new Vector3(-1.5f, 0, 0);
     private Vector3 directionRight     = new Vector3(1.5f, 0, 0);
 
+    [SerializeField] private PlayerInput input;
+
     void Start()
     {
+        if (Application.platform == RuntimePlatform.Android) {
+            input.neverAutoSwitchControlSchemes = true;
+            input.SwitchCurrentControlScheme(Gamepad.current);
+            joystick.SetActive(true);
+        } else {
+            input.neverAutoSwitchControlSchemes = false;
+            joystick.SetActive(false);
+        }
         characterController = GetComponent<CharacterController>();
     }
 
@@ -34,9 +46,17 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        moveVector = Vector3.zero;
+
+        if (characterController.isGrounded == false) {
+            //Add our gravity Vecotr
+            moveVector += Physics.gravity;
+            //characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
+        }
+
         if (movementVector.magnitude > deadZone)
         {
-            characterController.Move(new Vector3(movementVector.x, 0, movementVector.y) * Time.deltaTime * movementSpeed);
+            characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
         }
     }
 
