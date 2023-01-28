@@ -7,7 +7,8 @@ public class Movement : MonoBehaviour
 {
     private CharacterController characterController;
     private Vector2 movementVector;
-    private Vector3 moveVector;
+    public Vector3 moveVector;
+    private Vector3 startPosition;
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
@@ -26,6 +27,8 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        startPosition = transform.position;
+
         if (Application.platform == RuntimePlatform.Android) {
             input.neverAutoSwitchControlSchemes = true;
             input.SwitchCurrentControlScheme(Gamepad.current);
@@ -54,7 +57,13 @@ public class Movement : MonoBehaviour
             moveVector.y = 0;
         }
 
-        characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
+        characterController.Move(new Vector3(movementVector.x, moveVector.y + 5, movementVector.y) * Time.deltaTime * movementSpeed);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
+        if (hit.gameObject.tag == "Teleport") {
+            transform.position = startPosition;
+        }
     }
 
     private void Player_Rotation()
