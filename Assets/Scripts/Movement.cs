@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
 {
     private CharacterController characterController;
     private Vector2 movementVector;
-    public Vector3 moveVector;
+    private Vector3 moveVector;
     private Vector3 startPosition;
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
@@ -57,7 +57,7 @@ public class Movement : MonoBehaviour
             moveVector.y = 0;
         }
 
-        characterController.Move(new Vector3(movementVector.x, moveVector.y + 5, movementVector.y) * Time.deltaTime * movementSpeed);
+        characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {
