@@ -15,12 +15,12 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.41232228, g: 0.41232228, b: 0.41232228, a: 1}
+  m_FogColor: {r: 0.15294117, g: 0.15294117, b: 0.15294117, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.7012414, g: 0.72460425, b: 0.7837901, a: 1}
+  m_AmbientSkyColor: {r: 0.41960788, g: 0.4784314, b: 0.627451, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.9924329, g: 0.3582229, b: 1.281548, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.075197026, b: 0.22485879, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -395,7 +395,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.79520637, g: 0.7812616, b: 0.6980037, a: 1}
+  m_Color: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -453,7 +453,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
-  m_LocalRotation: {x: 0.06944945, y: -0.60188794, z: 0.7938103, w: 0.05265841}
+  m_LocalRotation: {x: 0.08534067, y: 0.20225202, z: 0.97544765, w: -0.017694771}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -487,7 +487,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1604
+  m_Name: pb_Mesh-120460
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -756,14 +756,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7843138, g: 0.078431375, b: 0.7686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 4a4c2c080803d2d4e9d02f157308b249, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -995,7 +995,7 @@ PrefabInstance:
     - target: {fileID: 5892384669365062777, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5892384669365062777, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
@@ -1005,7 +1005,7 @@ PrefabInstance:
     - target: {fileID: 5892384669365062777, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -30
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 5892384669365062777, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
@@ -1065,7 +1065,7 @@ PrefabInstance:
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
       propertyPath: ShapeModule.type
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
@@ -1090,7 +1090,7 @@ PrefabInstance:
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
       propertyPath: ShapeModule.m_Scale.y
-      value: 85
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
@@ -1105,12 +1105,17 @@ PrefabInstance:
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 31.81
+      value: 1.19
       objectReference: {fileID: 0}
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 1.0000
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
+        type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
@@ -1120,7 +1125,12 @@ PrefabInstance:
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
-      value: 150
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5892384669365062782, guid: b49721dc5c254b848865543216d1c7bd,
         type: 3}
@@ -1223,34 +1233,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tickEvent: {fileID: 11400000, guid: 3bef81e2ce4341047b8a6196ee785432, type: 2}
   plantsList: {fileID: 11400000, guid: fe2aa4178d5eac64a9f701a14b189244, type: 2}
-  dayTick: 6
+  dayTick: 24
   sun: {fileID: 410087040}
   sunAngleOverTime:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.000038146973
-      value: -0.103393555
-      inSlope: 2.2069554
-      outSlope: 2.2069554
+      time: 0
+      value: 0
+      inSlope: 0.031174414
+      outSlope: 0.031174414
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5
-      value: 1
-      inSlope: -0.013141155
-      outSlope: -0.013141155
-      tangentMode: 34
+      time: 0.17303962
+      value: 0.0053944085
+      inSlope: 0.095812336
+      outSlope: 0.095812336
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.11274731
     - serializedVersion: 3
-      time: 0.97927856
-      value: -0.07034302
-      inSlope: -2.2332377
-      outSlope: -2.2332377
+      time: 0.7313357
+      value: 1.1263618
+      inSlope: 0.21894793
+      outSlope: 0.21894793
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.39983225
+    - serializedVersion: 3
+      time: 1
+      value: 1.1301544
+      inSlope: 0.01411622
+      outSlope: 0.01411622
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -1258,6 +1277,36 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  skyColorOverTime:
+    serializedVersion: 2
+    key0: {r: 0, g: 0.21176471, b: 0.32156864, a: 1}
+    key1: {r: 0.74509805, g: 0.43137255, b: 0.7058824, a: 1}
+    key2: {r: 0, g: 0.20813805, b: 0.3207547, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 32960
+    ctime2: 64957
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  skyboxMaterial: {fileID: 2100000, guid: 3e5399bd195de7649b874f58c1b9f8a3, type: 2}
   currentWeather:
     weatherName: default weather
     lightPreset: {fileID: 11400000, guid: cbc0fa083f8051f4197f9a7f3928dd82, type: 2}
@@ -2359,6 +2408,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -347.21832
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296035544743584776, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9045220598874148812, guid: 75b20c87c4b02cd47b2af8e5210d29d3,
         type: 3}
@@ -8876,7 +8930,7 @@ PrefabInstance:
     - target: {fileID: 184576385301893031, guid: 9ac281eb4af0366439a0d998dfb28a0f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.35
       objectReference: {fileID: 0}
     - target: {fileID: 184576385301893031, guid: 9ac281eb4af0366439a0d998dfb28a0f,
         type: 3}
