@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private Vector3 hitboxSize;
     [SerializeField] private Coins Coin;
     [SerializeField] private TextMeshProUGUI MoneyUI;
+    [SerializeField] private Image[] invSprites;
     [HideInInspector] public int SeedNumber;
     public GameObject Bundle;
 
@@ -33,79 +35,89 @@ public class Inventory_System : MonoBehaviour {
             return;
         }
         
-        if (Eq.Count > 0) {
+        if (Eq.Count > 0) 
+        {
             handPlace.GetComponent<MeshRenderer>().enabled = true;
 
-            for (int i = 0; i < Eq.Count; i++) {
-                GameObject Slot = UI_Eq.transform.GetChild(i).gameObject;
-                if (Slot.GetComponent<Image>().sprite == null) {
-                    Slot.GetComponent<Image>().sprite = Eq[i].Icon;
+            for (int i=0; i<invSprites.Length; i++)
+            {
+                if (i < Eq.Count)
+                {
+                    invSprites[i].sprite = Eq[i].Icon;
                 }
+                else
+                {
+                    invSprites[i].sprite = null;
+                }
+                
             }
-
             if (Eq[0]) {
                 handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[0].Texture);
             }
         }
 
         UpdateMoneyUI();
-        UpdateBundleUI();
         ChangeHoldedItem(1);
+        UpdateBundleUI();
     }
 
-
+    /*
+    Wylaczone do czasu refaktora
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent<Item_info>(out Item_info item_info)) {
             Pickup_Item(item_info, collider);
-        }
+        }Wylaczone do czasu refaktora
     }
-
+    
     void Pickup_Item(Item_info item_info, Collider collider) {
         Items newItem = item_info.itemToPickup;
 
         for (int i = 0; i < UI_Eq.transform.childCount; i++) {
-            GameObject Slot = UI_Eq.transform.GetChild(i).gameObject;
-            if (Slot.GetComponent<Image>().sprite == null) {
+            Image Slot = UI_Eq.transform.GetChild(i).gameObject.GetComponent<Image>();
+            if (Slot.sprite == null) {
 
                 Eq.Add(newItem);
-                Slot.GetComponent<Image>().sprite = newItem.Icon;
+                Slot.sprite = newItem.Icon;
 
                 Destroy(collider.gameObject);
                 break;
             }
         }
     }
-
+    */
     public void Change_slot(InputAction.CallbackContext context) {
         if (context.started) {
-            int selection_number = int.Parse(context.control.name);
+            int selection_number = Mathf.Clamp(int.Parse(context.control.name),0, invSprites.Length);
 
-            if (Eq[selection_number-1].itemType == Items.Type.Bundle) {
-                Bundle.SetActive(true);
-            } else {
-                Bundle.SetActive(false);
-            }
+            
 
             ChangeHoldedItem(selection_number);
         }
     }
     
-    private void ChangeHoldedItem(int itemID)
+    public void ChangeHoldedItem(int itemID)
     {
-        //selectingSquare.transform.parent = UI_Eq.transform.GetChild(itemID - 1);
-        selectingSquare.transform.SetParent(UI_Eq.transform.GetChild(itemID - 1));
+        Mathf.Clamp(itemID, 1, invSprites.Length);//mozemy wybierac tylko z widocznych slotow
+
+        selectingSquare.transform.SetParent(invSprites[itemID - 1].transform);
         selectingSquare.transform.localPosition = Vector2.zero;
 
         if (itemID <= Eq.Count)
         {
-            handPlace.GetComponent<MeshRenderer>().enabled = true;
             handPlace.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Eq[itemID - 1].Texture);
             currentItem = Eq[itemID - 1];
         }
+
+        handPlace.GetComponent<MeshRenderer>().enabled = (itemID <= Eq.Count);
+
+        if (Eq[itemID - 1].itemType == Items.Type.Bundle)
+        {
+            UpdateBundleUI();
+            Bundle.SetActive(true);
+        }
         else
         {
-
-            handPlace.GetComponent<MeshRenderer>().enabled = false;
+            Bundle.SetActive(false);
         }
     }
     
@@ -152,19 +164,27 @@ public class Inventory_System : MonoBehaviour {
     }
 
     public void UpdateBundleUI() {
-        for (int i = 0; i < 9; i++) {
-            TextMeshProUGUI number = Bundle.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>();
+        for (int i = 0; i < 9; i++) 
+        {
+            Transform slot = Bundle.transform.GetChild(i);
+            //GetComponentInChildren nie dzia³a lol
+            Image iconDisplay = slot.GetChild(0).GetComponent<Image>();
+            TextMeshProUGUI number = slot.GetComponentInChildren<TextMeshProUGUI>();
 
-            if (i < Bundle_Inv.Count) {
-                Bundle.transform.GetChild(i).GetComponent<Image>().sprite =
-                    Bundle_Inv[i].plant.GetPlantIcon();
-
+            if (i < Bundle_Inv.Count && Bundle_Inv[i]!=null) 
+            {
+                iconDisplay.sprite = Bundle_Inv[i].plant.GetPlantIcon();
+                iconDisplay.color = new Color(1, 1, 1, 1);
                 number.SetText(Bundle_Inv[i].number.ToString());
-                if (Bundle_Inv[i].number == 0) {
+                if (Bundle_Inv[i].number == 0) 
+                {
                     number.SetText("");
                 }
-            } else {
-                Bundle.transform.GetChild(i).GetComponent<Image>().sprite = null;
+            } 
+            else 
+            {
+                iconDisplay.sprite = null;
+                iconDisplay.color = new Color(0,0,0,0);
                 number.SetText("");
             }
         }
@@ -173,7 +193,7 @@ public class Inventory_System : MonoBehaviour {
     public void Buy(int id) { 
         PlantData Seedinfo = Store.Instance.magazyn[id].plant;
 
-        //czy mamy kasÃª
+        //czy mamy kase
         if (Coin.Money >= Seedinfo.Price) {
             int seed_inventory_index = FindSeedIndexInInv(Seedinfo);
 
