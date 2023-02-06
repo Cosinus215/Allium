@@ -29,8 +29,8 @@ public class Candle : MonoBehaviour, IInteractable
                 return false;
 
             case Items.Type.Can:
-                fire.enabled = !fire.enabled;
-                IsLit = fire.enabled;
+                fire.enabled = false;
+                IsLit = false;
                 toRise.Invoke();
                 return true;
 

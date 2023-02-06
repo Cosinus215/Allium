@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 
 public class SummonGhost : MonoBehaviour
 {
-    public Candle[] candles;
-    public Ghost[] ghosts;
+    [SerializeField] private Candle[] candles;
+    [SerializeField] private Ghost[] ghosts;
+    [SerializeField] private TextMeshPro tmp;
 
     private void Start()
     {
@@ -13,6 +16,7 @@ public class SummonGhost : MonoBehaviour
         {
             ghosts[i].ShowGhost(false);
         }
+        tmp.text = "";
     }
     public void Check()
     {
@@ -27,9 +31,11 @@ public class SummonGhost : MonoBehaviour
     {
         int a = Random.Range(0, ghosts.Length);
         ghosts[a].ShowGhost(true);
-        yield return new WaitForSeconds(10);
+        tmp.text = ghosts[a].GetRandomQuote();
+        yield return new WaitForSeconds(5);
+        tmp.text = "";
         ghosts[a].ShowGhost(false);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         for (int i = 0; i < candles.Length; i++)
         {
             candles[i].LitFire();
@@ -41,9 +47,14 @@ public class Ghost
 {
     public string name;
     public GameObject appearance;
+    public string[] quotes;
 
     public void ShowGhost(bool status)
     {
         appearance.SetActive(status);
+    }
+    public string GetRandomQuote()
+    {
+        return quotes[Random.Range(0,quotes.Length)];
     }
 }

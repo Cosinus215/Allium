@@ -541,22 +541,56 @@ MonoBehaviour:
   ghosts:
   - name: Jacek
     appearance: {fileID: 1235405865}
+    quotes:
+    - Brzmi dobrze
   - name: Szum drzew
     appearance: {fileID: 1992531808}
+    quotes:
+    - Jeszcze raz powiesz czcionka ...
   - name: Gilbert Soze
     appearance: {fileID: 753487151}
+    quotes:
+    - "P\u0105czusia?"
+    - "Poka\u017C no t\u0105 siatk\u0119"
   - name: Eber Tolzen
     appearance: {fileID: 643456275}
+    quotes:
+    - "Jeste\u015B ca\u0142kiem wyszczekany jak na osob\u0119 bardzo przywi\u0105zan\u0105
+      do swojego bootloadera"
+    - "\u017Bycie to sztuka wyboru"
+    - Historii tego dysku i tak nie zrozumiesz
+    - "Je\u015Bli czego\u015B si\u0119 nie da zrobi\u0107, potrzebny jest kto\u015B
+      kto tego nie wie, przyjdzie i to zrobi"
+    - "Jak wyrzuc\u0119 nat 20 to p\xF3jdziemy na kaw\u0119?"
+    - Krasnoludy to mendy
   - name: Des
     appearance: {fileID: 197559042}
+    quotes:
+    - Co jest w tym kufrze?
   - name: Mucha z MF
     appearance: {fileID: 109813605}
+    quotes:
+    - Sup?
   - name: Barwnik
     appearance: {fileID: 366210378}
+    quotes:
+    - CR?
   - name: Felina
     appearance: {fileID: 595707415}
-  - name: Felina
+    quotes:
+    - "Nie, nie mo\u017Cesz doda\u0107 czo\u0142g\xF3w"
+    - Przypominam o raportach!
+    - Kto prowadzi spotkanie?
+  - name: Trygonometria
     appearance: {fileID: 17980222}
+    quotes:
+    - "Nic nie dzia\u0142a!"
+    - Nie ma takiego pushowania!
+  - name: Niewidzialny byt
+    appearance: {fileID: 1639518123}
+    quotes:
+    - "Ja tu tylko praktyki robi\u0119"
+  tmp: {fileID: 1030009549}
 --- !u!1001 &165055516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -982,6 +1016,7 @@ Transform:
   - {fileID: 366210379}
   - {fileID: 595707416}
   - {fileID: 17980226}
+  - {fileID: 1639518127}
   m_Father: {fileID: 144550470}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3711,7 +3746,7 @@ RectTransform:
   m_GameObject: {fileID: 1030009547}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 144550470}
@@ -3719,7 +3754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3.06}
+  m_AnchoredPosition: {x: 0, y: 4}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1030009549
@@ -3769,8 +3804,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5443,6 +5478,103 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 848d79ffb3dc1fe42ad3bec587271f7d, type: 3}
+--- !u!1 &1639518123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1639518127}
+  - component: {fileID: 1639518126}
+  - component: {fileID: 1639518125}
+  - component: {fileID: 1639518124}
+  m_Layer: 0
+  m_Name: Niewidzialny byt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1639518124
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639518123}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1639518125
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639518123}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1639518126
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639518123}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1639518127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639518123}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 295930987}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1648784226
 PrefabInstance:
   m_ObjectHideFlags: 0
