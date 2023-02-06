@@ -89,14 +89,6 @@ public class GameManager : MonoBehaviour
             -170,
             0));
         skyboxMaterial.SetColor("_Tint", skyColorOverTime.Evaluate(dayPercentage));
-        if (dayPercentage<0.25f || dayPercentage > 0.8f)
-        {
-            Debug.Log("Night");
-        }
-        else
-        {
-            Debug.Log("Day");
-        }
     }
     private void ChangeWeather()
     {
