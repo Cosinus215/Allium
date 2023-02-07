@@ -8,12 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Fence_Metal
-    second: {fileID: 2100000, guid: fb1dfa43f80f6104b9f13b102751db61, type: 2}
+    second: {fileID: 2100000, guid: a82d8a6aab0cae94e92803c358ce7363, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Fence_Wood
-    second: {fileID: 2100000, guid: 4ba982bcb77191145ad76bda77397950, type: 2}
+    second: {fileID: 2100000, guid: 51ba01fe8b8f6d241adc82f739b4640f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField] private Light sun;
     [SerializeField] private AnimationCurve sunAngleOverTime;
-    [SerializeField] private Gradient skyColorOverTime;
     [SerializeField] private Material skyboxMaterial;
 
     [Header("Weather")]
@@ -88,7 +87,8 @@ public class GameManager : MonoBehaviour
             new Vector3(sunAngleOverTime.Evaluate(dayPercentage)*180,
             -170,
             0));
-        skyboxMaterial.SetColor("_Tint", skyColorOverTime.Evaluate(dayPercentage));
+        skyboxMaterial.SetColor("_Tint", 
+            currentWeather.lightPreset.skyColorOverTime.Evaluate(dayPercentage));
     }
     private void ChangeWeather()
     {

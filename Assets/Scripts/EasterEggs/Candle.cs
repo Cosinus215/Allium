@@ -18,14 +18,12 @@ public class Candle : MonoBehaviour, IInteractable
         switch (item.itemType)
         {
             case Items.Type.Axe:
-                Debug.Log("Ciupaga");
                 return false;
 
             case Items.Type.Hoe:
                 return false;
 
             case Items.Type.Shovel:
-                Debug.Log("Lopata");
                 return false;
 
             case Items.Type.Can:

@@ -3,7 +3,27 @@ guid: 04c837fac2fb90b498c7f42bdc538d07
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Bottom_Island
+    second: {fileID: 2100000, guid: 6264e8f6f3883bb48874808db0397f6a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_GrassLand
+    second: {fileID: 2100000, guid: 70c13c44230e38b49ac1475972a9c14b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Rocks
+    second: {fileID: 2100000, guid: c96fe8ff6e3f2a04a8be6e8afcf16586, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Water
+    second: {fileID: 2100000, guid: 37acf24e574e26744a2fae39e0257b88, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
