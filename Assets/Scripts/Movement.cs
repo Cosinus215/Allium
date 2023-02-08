@@ -51,13 +51,22 @@ public class Movement : MonoBehaviour
     {
         moveVector = Vector3.zero;
 
-        if (characterController.isGrounded == false) {
-            moveVector += Physics.gravity;
+        if (!IsInWater()) {
+            if (characterController.isGrounded == false) {
+                moveVector += Physics.gravity;
+            } else {
+                moveVector.y = 0;
+            }
         } else {
-            moveVector.y = 0;
+            Physics.gravity = new Vector3(0, -1);
+            moveVector.y = Mathf.MoveTowards(transform.position.y, transform.position.y, 3 * Time.deltaTime);
         }
-
         characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
+
+    }
+
+    private bool IsInWater() {
+        return Physics.CheckSphere(transform.position, 0.5f, LayerMask.GetMask("Water"));
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {
@@ -97,5 +106,7 @@ public class Movement : MonoBehaviour
             directionPoint.transform.localPosition = directionDown;
         }
     }
+
+
 
 }

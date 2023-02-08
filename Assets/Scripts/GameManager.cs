@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour
         for (;;)
         {
             ++gameTick;
-            dayTick = (byte)System.DateTime.Now.Hour;
-            //dayTick = 8;
+            //dayTick = (byte)System.DateTime.Now.Hour;
+            dayTick = 13;
 
             if(gameTick >= weatherUpdateTick)
             {
