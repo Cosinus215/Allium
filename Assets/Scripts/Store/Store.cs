@@ -12,7 +12,7 @@ public class Store : MonoBehaviour {
     [SerializeField] private GameObject StoreUI;
     [SerializeField] private GameObject store_Place;
     [SerializeField] private GameObject buttonPref;
-    [HideInInspector] public List<seed> magazyn = new List<seed>();
+    [SerializeField] public List<seed> magazyn = new List<seed>();
 
     private void Start() {
         if (Instance is null) {

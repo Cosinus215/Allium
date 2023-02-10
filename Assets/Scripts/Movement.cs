@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     private Vector2 movementVector;
     private Vector3 moveVector;
     private Vector3 startPosition;
+
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
@@ -24,6 +25,10 @@ public class Movement : MonoBehaviour
     private Vector3 directionRight     = new Vector3(1.5f, 0, 0);
 
     [SerializeField] private PlayerInput input;
+
+    public float mlekoJajkaSer;
+    public float transTimer = 0;
+    public float transTime = 1;
 
     public float buoyancy;
     public float time;
@@ -53,19 +58,31 @@ public class Movement : MonoBehaviour
 
     private void Update() {
         moveVector = Vector3.zero;
+        bool inWater = IsInWater();
 
-        if (IsInWater()) {
-           // Physics.gravity = new Vector3(0, -1);
-            //float waterLevel = GetWaterLevel(transform.position);
-            //float buoyancy =  1f;
-            moveVector.y = Mathf.Lerp(transform.position.y, poziom + buoyancy, Time.deltaTime * time);
-        } else {
-            if (characterController.isGrounded == false) {
+        if (inWater) { transTimer += Time.deltaTime; }
+
+        if (inWater) 
+        {
+            if (transTimer > transTime)
+            {
+                //moveVector.y = Mathf.Lerp(transform.position.y, poziom + buoyancy, Time.deltaTime * time);
+                moveVector.y += mlekoJajkaSer * Time.deltaTime;
+            }
+        } else 
+        {
+            transTimer = 0;
+            
+            if (characterController.isGrounded == false) 
+            {
                 moveVector += new Vector3(0, -1);
-            } else {
+            } 
+            else 
+            {
                 moveVector.y = 0;
             }
         }
+       
         characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
     }
 

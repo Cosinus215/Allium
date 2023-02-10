@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bundle
   m_EditorClassIdentifier: 
   Name: Bundle
-  Icon: {fileID: 21300000, guid: 5b77c289b0ac1144d95c71de4531388e, type: 3}
-  Texture: {fileID: 2800000, guid: 5b77c289b0ac1144d95c71de4531388e, type: 3}
+  Icon: {fileID: 21300000, guid: cb373ab12dac8944fbd075906570ef3e, type: 3}
+  Texture: {fileID: 2800000, guid: cb373ab12dac8944fbd075906570ef3e, type: 3}
   itemType: 4

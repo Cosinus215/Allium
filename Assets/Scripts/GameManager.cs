@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     private const uint WEATHER_MIN_UPDATE_TRESHOLD = 5;
     private const uint WEATHER_MAX_UPDATE_TRESHOLD = 10;
 
-    public SaveFile sv;//potem to wywaliæ - na razie do debugowania i pobiera sporo pamiêci tak jak ta linijka
     public string path;
     private void Start()
     {
@@ -47,6 +46,7 @@ public class GameManager : MonoBehaviour
         path = Application.persistentDataPath + "/save.fly";
         //Internal game timer
         StartCoroutine(GameTick());
+        LoadGame();
     }
     private IEnumerator GameTick()
     {
@@ -113,6 +113,10 @@ public class GameManager : MonoBehaviour
     {
         return currentWeather;
     }
+    public void OnApplicationQuit()
+    {
+        SaveGame();
+    }
     public PlantData GetPlantDataByID(int id)
     {
         if(plantsList != null & plantsList.Plants.Count > id)
@@ -130,7 +134,7 @@ public class GameManager : MonoBehaviour
             blocksData.Add(new FarmlandBlockSaveData(fb));
         }
 
-        sv = new SaveFile(blocksData);
+        SaveFile sv = new SaveFile(blocksData);
         
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(path, FileMode.Create);
@@ -156,6 +160,7 @@ public class GameManager : MonoBehaviour
         }
     
         BinaryFormatter bf = new BinaryFormatter();
+        SaveFile sv;
         try
         {
             sv = (SaveFile)bf.Deserialize(plik);           

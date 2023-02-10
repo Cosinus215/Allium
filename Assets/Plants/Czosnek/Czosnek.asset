@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66f22bec1c4a6740aa79211d8ff30d6, type: 3}
+  m_Name: Czosnek
+  m_EditorClassIdentifier: 
+  plantName: Czosnek
+  seedIcon: {fileID: 21300000, guid: 7c8056a9988ee4b42860ed2fb8bbc511, type: 3}
+  plantTextures:
+  - {fileID: 2800000, guid: a13aadc4ac8415e4594435af8dadeee0, type: 3}
+  - {fileID: 2800000, guid: 4d5fbfe8f00563f4981f6e4ba28dbd85, type: 3}
+  - {fileID: 2800000, guid: 7304eacc3911cb64998db9b18b9c1137, type: 3}
+  - {fileID: 2800000, guid: a1a59157b9ee44846b89a45f564aa501, type: 3}
+  plantGrowthTime: 7200
+  plantGameID: 0
+  Price: 350
