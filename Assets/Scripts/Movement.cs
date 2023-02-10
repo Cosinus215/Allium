@@ -25,6 +25,10 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private PlayerInput input;
 
+    public float buoyancy;
+    public float time;
+    public float poziom;
+
     void Start()
     {
         startPosition = transform.position;
@@ -47,24 +51,28 @@ public class Movement : MonoBehaviour
         Player_LookDirection();
     }
 
-    private void Update()
-    {
+    private void Update() {
         moveVector = Vector3.zero;
 
-        if (!IsInWater()) {
+        if (IsInWater()) {
+           // Physics.gravity = new Vector3(0, -1);
+            //float waterLevel = GetWaterLevel(transform.position);
+            //float buoyancy =  1f;
+            moveVector.y = Mathf.Lerp(transform.position.y, poziom + buoyancy, Time.deltaTime * time);
+        } else {
             if (characterController.isGrounded == false) {
-                moveVector += Physics.gravity;
+                moveVector += new Vector3(0, -1);
             } else {
                 moveVector.y = 0;
             }
-        } else {
-            Physics.gravity = new Vector3(0, -1);
-            moveVector.y = Mathf.MoveTowards(transform.position.y, transform.position.y, 3 * Time.deltaTime);
         }
         characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
-
     }
 
+    //private float GetWaterLevel(Vector3 position) {
+    //    return poziom;
+    //}
+    
     private bool IsInWater() {
         return Physics.CheckSphere(transform.position, 0.5f, LayerMask.GetMask("Water"));
     }
