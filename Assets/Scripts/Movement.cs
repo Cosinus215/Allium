@@ -26,13 +26,9 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private PlayerInput input;
 
-    public float mlekoJajkaSer;
-    public float transTimer = 0;
-    public float transTime = 1;
-
-    public float buoyancy;
-    public float time;
-    public float poziom;
+    public float value;
+    public float timeBeetweenBuycynes = 0;
+    public float myTime = 1;
 
     void Start()
     {
@@ -60,36 +56,30 @@ public class Movement : MonoBehaviour
         moveVector = Vector3.zero;
         bool inWater = IsInWater();
 
-        if (inWater) { transTimer += Time.deltaTime; }
+        if (inWater) { timeBeetweenBuycynes += Time.deltaTime; }
 
-        if (inWater) 
-        {
-            if (transTimer > transTime)
-            {
-                //moveVector.y = Mathf.Lerp(transform.position.y, poziom + buoyancy, Time.deltaTime * time);
-                moveVector.y += mlekoJajkaSer * Time.deltaTime;
+        if (inWater) {
+            if (timeBeetweenBuycynes/2 > myTime) {
+                moveVector.y -= value * 0.008f;
             }
-        } else 
-        {
-            transTimer = 0;
-            
-            if (characterController.isGrounded == false) 
-            {
+
+            if (timeBeetweenBuycynes > myTime) {
+                moveVector.y += value * 0.008f;
+                //Debug.Log(Time.deltaTime);
+            }
+        } else {
+            timeBeetweenBuycynes = 0;
+
+            if (characterController.isGrounded == false) {
                 moveVector += new Vector3(0, -1);
-            } 
-            else 
-            {
+            } else {
                 moveVector.y = 0;
             }
         }
-       
+
         characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
     }
 
-    //private float GetWaterLevel(Vector3 position) {
-    //    return poziom;
-    //}
-    
     private bool IsInWater() {
         return Physics.CheckSphere(transform.position, 0.5f, LayerMask.GetMask("Water"));
     }
