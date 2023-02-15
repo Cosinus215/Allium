@@ -29,6 +29,9 @@ public class Movement : MonoBehaviour
     public float value;
     public float timeBeetweenBuycynes = 0;
     public float myTime = 1;
+    public float height;
+    public float offset;
+
 
     void Start()
     {
@@ -56,19 +59,11 @@ public class Movement : MonoBehaviour
         moveVector = Vector3.zero;
         bool inWater = IsInWater();
 
-        if (inWater) { timeBeetweenBuycynes += Time.deltaTime; }
-
         if (inWater) {
-            if (timeBeetweenBuycynes/2 > myTime) {
-                moveVector.y -= value * 0.008f;
-            }
-
-            if (timeBeetweenBuycynes > myTime) {
-                moveVector.y += value * 0.008f;
-                //Debug.Log(Time.deltaTime);
-            }
+            //Octi.transform.position = new Vector3(transform.position.x ,transform.position.y + (Mathf.Cos(Time.time * 4f) + offset) /height, transform.position.z);
+            Octi.transform.position = new Vector3(transform.position.x, offset, transform.position.z);
         } else {
-            timeBeetweenBuycynes = 0;
+
 
             if (characterController.isGrounded == false) {
                 moveVector += new Vector3(0, -1);
@@ -87,6 +82,35 @@ public class Movement : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit) {
         if (hit.gameObject.tag == "Teleport") {
             transform.position = startPosition;
+        }
+        //if (hit.gameObject.layer == 4) {
+        //    Debug.Log("collided with water");
+        //}
+    }
+
+    private void OnTriggerEnter(Collider collider) {
+        detectWater(collider);
+    }
+
+    private void OnTriggerStay(Collider collider) {
+        detectWater(collider);
+    }
+
+    private void detectWater(Collider collider) {
+        if (collider.gameObject.layer == 4) {
+            Vector3 rayStartPosition = Octi.transform.position;
+            rayStartPosition.y += 20f;
+            Vector3 rayDirection = Vector3.down;
+            float rayLength = 100f;
+            RaycastHit hit;
+            if (Physics.Raycast(rayStartPosition, rayDirection, out hit, rayLength)) {
+                // The ray hit something
+                Debug.Log("Hit object: " + hit.collider.gameObject.name);
+                Debug.Log("Hit point: " + hit.point);
+                offset = hit.point.y + 0.5f;
+                Debug.DrawLine(Octi.transform.position, hit.point, Color.magenta);
+            }
+            
         }
     }
 
