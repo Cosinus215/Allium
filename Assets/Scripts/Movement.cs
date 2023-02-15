@@ -26,17 +26,18 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private PlayerInput input;
 
-    public float value;
-    public float timeBeetweenBuycynes = 0;
-    public float myTime = 1;
-    public float height;
-    public float offset;
+    [SerializeField] private Vector3 gfxPos;
+    [Header("Swimming")]
+    [SerializeField] private float amplitude = 1;
+    [SerializeField] private float heightOffset = 1;
+    [SerializeField] private bool isInWater;
+
+    //public float offset;
 
 
     void Start()
     {
-        startPosition = transform.position;
-
+        startPosition = transform.localPosition;
         if (Application.platform == RuntimePlatform.Android) {
             input.neverAutoSwitchControlSchemes = true;
             input.SwitchCurrentControlScheme(Gamepad.current);
@@ -46,6 +47,7 @@ public class Movement : MonoBehaviour
             joystick.SetActive(false);
         }
         characterController = GetComponent<CharacterController>();
+        gfxPos = Octi.transform.localPosition;
     }
 
     public void PlayerMovement(InputAction.CallbackContext context)
@@ -58,12 +60,17 @@ public class Movement : MonoBehaviour
     private void Update() {
         moveVector = Vector3.zero;
         bool inWater = IsInWater();
-
+        
         if (inWater) {
-            //Octi.transform.position = new Vector3(transform.position.x ,transform.position.y + (Mathf.Cos(Time.time * 4f) + offset) /height, transform.position.z);
-            Octi.transform.position = new Vector3(transform.position.x, offset, transform.position.z);
-        } else {
-
+            Octi.transform.localPosition = new Vector3(gfxPos.x, 
+                amplitude * Mathf.Cos(Time.time ) + heightOffset,
+                gfxPos.z);
+        } else 
+        {
+            if(isInWater) 
+            {
+                Octi.transform.localPosition = gfxPos;
+            }
 
             if (characterController.isGrounded == false) {
                 moveVector += new Vector3(0, -1);
@@ -71,7 +78,7 @@ public class Movement : MonoBehaviour
                 moveVector.y = 0;
             }
         }
-
+        isInWater = inWater;
         characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
     }
 
@@ -105,9 +112,8 @@ public class Movement : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(rayStartPosition, rayDirection, out hit, rayLength)) {
                 // The ray hit something
-                Debug.Log("Hit object: " + hit.collider.gameObject.name);
-                Debug.Log("Hit point: " + hit.point);
-                offset = hit.point.y + 0.5f;
+                //Debug.Log("Hit object: " + hit.collider.gameObject.name);
+                //Debug.Log("Hit point: " + hit.point);
                 Debug.DrawLine(Octi.transform.position, hit.point, Color.magenta);
             }
             
@@ -145,7 +151,4 @@ public class Movement : MonoBehaviour
             directionPoint.transform.localPosition = directionDown;
         }
     }
-
-
-
 }

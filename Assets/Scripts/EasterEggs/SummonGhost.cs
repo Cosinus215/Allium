@@ -9,7 +9,8 @@ public class SummonGhost : MonoBehaviour
     [SerializeField] private Candle[] candles;
     [SerializeField] private Ghost[] ghosts;
     [SerializeField] private TextMeshPro tmp;
-
+    [SerializeField] private ParticleSystem particles;
+    [SerializeField] private ParticleSystem particlesOut;
     private void Start()
     {
         for (int i = 0; i < ghosts.Length; i++)
@@ -29,13 +30,16 @@ public class SummonGhost : MonoBehaviour
 
     IEnumerator GhostArrival()
     {
+        particles.Play();
         int a = Random.Range(0, ghosts.Length);
         ghosts[a].ShowGhost(true);
         tmp.text = ghosts[a].GetRandomQuote();
         yield return new WaitForSeconds(5);
+        particlesOut.Play();
+        yield return new WaitForSeconds(1.25f);
         tmp.text = "";
         ghosts[a].ShowGhost(false);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < candles.Length; i++)
         {
             candles[i].LitFire();

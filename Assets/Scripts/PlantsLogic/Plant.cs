@@ -81,7 +81,6 @@ public class Plant
             if (currentPlantState == PlantState.Growing)
             {
                 currentPlantState = PlantState.ReadyToHarvest;
-                Debug.Log($"{plantData.GetPlantName()} is ready to harvest!");
             }
         }
         UpdateGraphic(targetGraphic);
