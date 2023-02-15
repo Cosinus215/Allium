@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,6 +12,7 @@ public class SummonGhost : MonoBehaviour
     [SerializeField] private TextMeshPro tmp;
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private ParticleSystem particlesOut;
+    bool during = false;
     private void Start()
     {
         for (int i = 0; i < ghosts.Length; i++)
@@ -21,6 +23,7 @@ public class SummonGhost : MonoBehaviour
     }
     public void Check()
     {
+        if (during) return;
         for (int i=0; i<candles.Length; i++)
         { 
             if (candles[i].IsLit)return;
@@ -30,8 +33,9 @@ public class SummonGhost : MonoBehaviour
 
     IEnumerator GhostArrival()
     {
+        during = true;
         particles.Play();
-        int a = Random.Range(0, ghosts.Length);
+        int a = UnityEngine.Random.Range(0, ghosts.Length);
         ghosts[a].ShowGhost(true);
         tmp.text = ghosts[a].GetRandomQuote();
         yield return new WaitForSeconds(5);
@@ -44,6 +48,7 @@ public class SummonGhost : MonoBehaviour
         {
             candles[i].LitFire();
         }
+        during = false;
     }
 }
 [System.Serializable]
@@ -59,6 +64,6 @@ public class Ghost
     }
     public string GetRandomQuote()
     {
-        return quotes[Random.Range(0,quotes.Length)];
+        return quotes[UnityEngine.Random.Range(0,quotes.Length)];
     }
 }

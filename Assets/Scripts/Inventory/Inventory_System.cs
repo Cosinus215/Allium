@@ -237,9 +237,13 @@ public class Inventory_System : MonoBehaviour {
             Debug.LogError("Broken seed!");
         }  
     }
-    
+    public void AddMoney(int amout)
+    {
+        Coin.Money += amout;
+        UpdateMoneyUI();
+    }
     public void UpdateMoneyUI() {
-        MoneyUI.SetText($"Your Money: {Coin.Money}");
+        MoneyUI.SetText($"Coins: {Coin.Money}");
     }
     public int GetMoneyAmout()
     {

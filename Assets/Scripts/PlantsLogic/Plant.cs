@@ -85,6 +85,10 @@ public class Plant
         }
         UpdateGraphic(targetGraphic);
 }
+    public bool IsReadyToHarvest()
+    {
+        return currentPlantState== PlantState.ReadyToHarvest;
+    }
     public int GetPlantAge()
     {
         return plantAge;

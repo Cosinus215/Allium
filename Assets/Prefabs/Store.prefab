@@ -363,8 +363,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8747767688633489162}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.69, y: 2.62, z: -15.85}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 53.6, y: 5.16, z: -26.8}
+  m_LocalScale: {x: 5.9819083, y: 5.9819083, z: 5.9819083}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 184576385301893031}
@@ -451,6 +451,12 @@ MonoBehaviour:
     type: 3}
   magazyn:
   - number: 1
-    plant: {fileID: 11400000, guid: dd1188381195b8243a41161e359acf14, type: 2}
+    plant: {fileID: 11400000, guid: 24986da36dd6fae4493dda9d80fd76c6, type: 2}
   - number: 1
-    plant: {fileID: 11400000, guid: d3fc1579211bbe54d8b0b0b74eff3d5c, type: 2}
+    plant: {fileID: 11400000, guid: c20b7f2438b1b884dae253f27e5db142, type: 2}
+  - number: 1
+    plant: {fileID: 11400000, guid: 42d375f4f338b5b4ea61f6c50999a39c, type: 2}
+  - number: 1
+    plant: {fileID: 11400000, guid: 91803758b2bb84442880ab75fe802b6b, type: 2}
+  - number: 1
+    plant: {fileID: 11400000, guid: 5a03c6c3ca55caf45bac8bdbae3947d3, type: 2}
