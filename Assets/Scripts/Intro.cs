@@ -16,12 +16,10 @@ public class Intro : MonoBehaviour
         CinemachineTransposer ct = cvc.GetCinemachineComponent<CinemachineTransposer>();
         Vector3 endPos = ct.m_FollowOffset;
         Vector3 startPos = new Vector3(0,21, -125);
-        Vector3 curPos = endPos;
-        float time = 4;
+        float time = 2;
         for (float t = 0; t<=time; t+=Time.deltaTime)
         {
-            curPos = Vector3.Lerp(startPos, endPos, t/time);
-            ct.m_FollowOffset = curPos;
+            ct.m_FollowOffset = Vector3.Lerp(startPos, endPos, t / time);
             yield return null;
         }
         ct.m_FollowOffset = endPos;

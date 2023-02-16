@@ -84,11 +84,9 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
 
     public bool Interact(Items item = null)
     {
-        Debug.Log($"Interaction with: {name}");
         switch (item.itemType) 
         {
             case Items.Type.Axe:
-                Debug.Log("Ciupaga");
                 return false;
 
             case Items.Type.Hoe:
@@ -101,7 +99,6 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
                 return false;
 
             case Items.Type.Shovel:
-                Debug.Log("Lopata");
                 return false;
 
             case Items.Type.Can:
