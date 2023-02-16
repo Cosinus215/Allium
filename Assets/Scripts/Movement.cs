@@ -32,8 +32,6 @@ public class Movement : MonoBehaviour
     [SerializeField] private float heightOffset = 1;
     [SerializeField] private bool isInWater;
 
-    //public float offset;
-
 
     void Start()
     {
@@ -89,34 +87,6 @@ public class Movement : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit) {
         if (hit.gameObject.tag == "Teleport") {
             transform.position = startPosition;
-        }
-        //if (hit.gameObject.layer == 4) {
-        //    Debug.Log("collided with water");
-        //}
-    }
-
-    private void OnTriggerEnter(Collider collider) {
-        detectWater(collider);
-    }
-
-    private void OnTriggerStay(Collider collider) {
-        detectWater(collider);
-    }
-
-    private void detectWater(Collider collider) {
-        if (collider.gameObject.layer == 4) {
-            Vector3 rayStartPosition = Octi.transform.position;
-            rayStartPosition.y += 20f;
-            Vector3 rayDirection = Vector3.down;
-            float rayLength = 100f;
-            RaycastHit hit;
-            if (Physics.Raycast(rayStartPosition, rayDirection, out hit, rayLength)) {
-                // The ray hit something
-                //Debug.Log("Hit object: " + hit.collider.gameObject.name);
-                //Debug.Log("Hit point: " + hit.point);
-                Debug.DrawLine(Octi.transform.position, hit.point, Color.magenta);
-            }
-            
         }
     }
 
