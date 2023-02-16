@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using NUnit.Framework.Constraints;
+using UnityEditor.ShaderGraph.Internal;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,14 +23,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Light sun;
     [SerializeField] private AnimationCurve sunAngleOverTime;
     [SerializeField] private Material skyboxMaterial;
-
+    [SerializeField] private GameObject dayObjects;
+    [SerializeField] private GameObject nigthObjects;
     [Header("Weather")]
     public Weather currentWeather;
     public Weather[] weather;
     private uint weatherUpdateTick = 0;
 
-    private const uint WEATHER_MIN_UPDATE_TRESHOLD = 5;
-    private const uint WEATHER_MAX_UPDATE_TRESHOLD = 10;
+
+
+    private const uint WEATHER_MIN_UPDATE_TRESHOLD = 30;
+    private const uint WEATHER_MAX_UPDATE_TRESHOLD = 100;
 
     public string path;
     private void Start()
@@ -44,9 +48,9 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         path = Application.persistentDataPath + "/save.fly";
-        //Internal game timer
-        StartCoroutine(GameTick());
+
         LoadGame();
+        StartCoroutine(GameTick());
     }
     private IEnumerator GameTick()
     {
@@ -73,7 +77,19 @@ public class GameManager : MonoBehaviour
          * Later move to some sort of coroutine to avoid "blockines" of
          * light updates
         */
-        UpdateLighting((float)dayTick/ 24);
+        //float time = (float)dayTick / 24;
+        float time = (float)DateTime.Now.Hour / 24;
+
+        UpdateLighting(time);
+
+        if(time< 0.25 || time > 0.75)
+        {
+            //Debug.Log($"Night {time}");
+        }
+        else
+        {
+            //Debug.Log($"Day {time}");
+        }
     }
     private void UpdateLighting(float dayPercentage)
     {

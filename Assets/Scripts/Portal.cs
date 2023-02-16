@@ -11,7 +11,6 @@ public class Portal : MonoBehaviour
     float nextChange = 0;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogWarning("Portal!");
         if (other.CompareTag("Player"))
         {
             if(p == null) {p=other.GetComponent<Player>();}

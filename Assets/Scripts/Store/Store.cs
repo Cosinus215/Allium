@@ -57,6 +57,7 @@ public class Store : MonoBehaviour {
             b.GetComponent<Image>().sprite = s.plant.seedIcon;
             b.GetComponent<SeedInfo>().Seed = s.plant;
             b.transform.Find("Price").GetComponent<TextMeshProUGUI>().SetText(s.plant.Price.ToString());
+            b.transform.Find("Desc").GetComponent<TextMeshProUGUI>().SetText(s.plant.GetPlantName());
             b.onClick.AddListener(delegate { Inventory_System.Instance.Buy(temp); });
             number++;
         }
