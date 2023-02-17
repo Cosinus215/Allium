@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using NUnit.Framework.Constraints;
-using UnityEditor.ShaderGraph.Internal;
 
 public class GameManager : MonoBehaviour
 {
