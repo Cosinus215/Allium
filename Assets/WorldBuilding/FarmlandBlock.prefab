@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 5902135491879594279}
   healthColor: {r: 0, g: 0, b: 0, a: 0}
-  dryColor: {r: 0.7529412, g: 0.54901963, b: 0.08235294, a: 0.7294118}
+  dryColor: {r: 0.7529412, g: 0.54901963, b: 0.08235294, a: 0.6392157}
 --- !u!114 &3483850515893479002
 MonoBehaviour:
   m_ObjectHideFlags: 0
