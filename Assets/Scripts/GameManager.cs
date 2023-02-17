@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using NUnit.Framework.Constraints;
-using UnityEditor.ShaderGraph.Internal;
 
 public class GameManager : MonoBehaviour
 {
@@ -58,7 +56,6 @@ public class GameManager : MonoBehaviour
         {
             ++gameTick;
             //dayTick = (byte)System.DateTime.Now.Hour;
-            dayTick = 13;
 
             if(gameTick >= weatherUpdateTick)
             {
@@ -81,15 +78,6 @@ public class GameManager : MonoBehaviour
         float time = (float)DateTime.Now.Hour / 24;
 
         UpdateLighting(time);
-
-        if(time< 0.25 || time > 0.75)
-        {
-            //Debug.Log($"Night {time}");
-        }
-        else
-        {
-            //Debug.Log($"Day {time}");
-        }
     }
     private void UpdateLighting(float dayPercentage)
     {

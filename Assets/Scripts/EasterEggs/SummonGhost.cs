@@ -13,6 +13,7 @@ public class SummonGhost : MonoBehaviour
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private ParticleSystem particlesOut;
     bool during = false;
+    [SerializeField] private AudioSource ass;
     private void Start()
     {
         for (int i = 0; i < ghosts.Length; i++)
@@ -33,6 +34,7 @@ public class SummonGhost : MonoBehaviour
 
     IEnumerator GhostArrival()
     {
+        ass.Play();
         during = true;
         particles.Play();
         int a = UnityEngine.Random.Range(0, ghosts.Length);
@@ -41,6 +43,7 @@ public class SummonGhost : MonoBehaviour
         yield return new WaitForSeconds(5);
         particlesOut.Play();
         yield return new WaitForSeconds(1.25f);
+        ass.Play();
         tmp.text = "";
         ghosts[a].ShowGhost(false);
         yield return new WaitForSeconds(0.5f);

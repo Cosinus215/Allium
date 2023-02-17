@@ -23,17 +23,24 @@ public class Inventory_System : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI MoneyUI;
     [SerializeField] private Image[] invSprites;
     [HideInInspector] public int SeedNumber;
+    [SerializeField] private ParticleSystem[] effects;
     public GameObject Bundle;
-
-    private void Start() {
-
-        if (Instance is null) {
+    public float nextClick = 0;
+    private void Awake()
+    {
+        if (Instance is null)
+        {
             Instance = this;
-        } else {
+        }
+        else
+        {
             Debug.LogWarning("Too much inventories");
             Destroy(this);
             return;
         }
+    }
+    private void Start() 
+    {
         
         if (Eq.Count > 0) 
         {
@@ -123,12 +130,11 @@ public class Inventory_System : MonoBehaviour {
     
     public void Action(InputAction.CallbackContext context)
     {
-        if (context.started && point)
-        {
+        if (context.started && point && Time.time>= nextClick)
+        {       
             Collider[] hit = Physics.OverlapBox(point.position, hitboxSize);
             for (int i = 0;i < hit.Length; ++i) 
-            {
-                
+            {  
                 if (hit[i].gameObject.TryGetComponent(out IInteractable inter))
                 {
                     bool b = inter.Interact(currentItem);
@@ -138,6 +144,12 @@ public class Inventory_System : MonoBehaviour {
                     return;
                 }
             }
+            int a = currentItem.EffectNumber;
+            if (a != -1 && a < effects.Length)
+            {
+                effects[a].Play();
+            }
+            nextClick = Time.time + 1;
         }
     }
     void OnDrawGizmos()
