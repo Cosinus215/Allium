@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using NUnit.Framework.Constraints;
+using UnityEditor.ShaderGraph.Internal;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,16 +23,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Light sun;
     [SerializeField] private AnimationCurve sunAngleOverTime;
     [SerializeField] private Material skyboxMaterial;
-
+    [SerializeField] private GameObject dayObjects;
+    [SerializeField] private GameObject nigthObjects;
     [Header("Weather")]
     public Weather currentWeather;
     public Weather[] weather;
     private uint weatherUpdateTick = 0;
 
-    private const uint WEATHER_MIN_UPDATE_TRESHOLD = 5;
-    private const uint WEATHER_MAX_UPDATE_TRESHOLD = 10;
 
-    public SaveFile sv;//potem to wywaliæ - na razie do debugowania i pobiera sporo pamiêci tak jak ta linijka
+
+    private const uint WEATHER_MIN_UPDATE_TRESHOLD = 30;
+    private const uint WEATHER_MAX_UPDATE_TRESHOLD = 100;
+
     public string path;
     private void Start()
     {
@@ -45,7 +48,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         path = Application.persistentDataPath + "/save.fly";
-        //Internal game timer
+
+        LoadGame();
         StartCoroutine(GameTick());
     }
     private IEnumerator GameTick()
@@ -53,8 +57,8 @@ public class GameManager : MonoBehaviour
         for (;;)
         {
             ++gameTick;
-            dayTick = (byte)System.DateTime.Now.Hour;
-            //dayTick = 8;
+            //dayTick = (byte)System.DateTime.Now.Hour;
+            dayTick = 13;
 
             if(gameTick >= weatherUpdateTick)
             {
@@ -73,7 +77,19 @@ public class GameManager : MonoBehaviour
          * Later move to some sort of coroutine to avoid "blockines" of
          * light updates
         */
-        UpdateLighting((float)dayTick/ 24);
+        //float time = (float)dayTick / 24;
+        float time = (float)DateTime.Now.Hour / 24;
+
+        UpdateLighting(time);
+
+        if(time< 0.25 || time > 0.75)
+        {
+            //Debug.Log($"Night {time}");
+        }
+        else
+        {
+            //Debug.Log($"Day {time}");
+        }
     }
     private void UpdateLighting(float dayPercentage)
     {
@@ -113,6 +129,10 @@ public class GameManager : MonoBehaviour
     {
         return currentWeather;
     }
+    public void OnApplicationQuit()
+    {
+        SaveGame();
+    }
     public PlantData GetPlantDataByID(int id)
     {
         if(plantsList != null & plantsList.Plants.Count > id)
@@ -130,7 +150,7 @@ public class GameManager : MonoBehaviour
             blocksData.Add(new FarmlandBlockSaveData(fb));
         }
 
-        sv = new SaveFile(blocksData);
+        SaveFile sv = new SaveFile(blocksData);
         
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(path, FileMode.Create);
@@ -156,6 +176,7 @@ public class GameManager : MonoBehaviour
         }
     
         BinaryFormatter bf = new BinaryFormatter();
+        SaveFile sv;
         try
         {
             sv = (SaveFile)bf.Deserialize(plik);           

@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: PlantsInGame
   m_EditorClassIdentifier: 
   Plants:
-  - {fileID: 11400000, guid: d3fc1579211bbe54d8b0b0b74eff3d5c, type: 2}
-  - {fileID: 11400000, guid: dd1188381195b8243a41161e359acf14, type: 2}
+  - {fileID: 11400000, guid: 5a03c6c3ca55caf45bac8bdbae3947d3, type: 2}
+  - {fileID: 11400000, guid: c20b7f2438b1b884dae253f27e5db142, type: 2}
+  - {fileID: 11400000, guid: 42d375f4f338b5b4ea61f6c50999a39c, type: 2}
+  - {fileID: 11400000, guid: 24986da36dd6fae4493dda9d80fd76c6, type: 2}
+  - {fileID: 11400000, guid: 91803758b2bb84442880ab75fe802b6b, type: 2}

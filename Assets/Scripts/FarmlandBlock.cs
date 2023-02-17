@@ -84,18 +84,21 @@ public class FarmlandBlock : MonoBehaviour, IInteractable
 
     public bool Interact(Items item = null)
     {
-        //Debug.Log($"Interaction with: {name}");
         switch (item.itemType) 
         {
             case Items.Type.Axe:
-                Debug.Log("Ciupaga");
                 return false;
 
             case Items.Type.Hoe:
+                if (currentPlant != null && currentPlant.IsReadyToHarvest())
+                {
+                    Inventory_System.Instance.AddMoney(currentPlant.GetPlantData().Price * 2);
+                    SetPlantData(null);
+                    return true;
+                }
                 return false;
 
             case Items.Type.Shovel:
-                Debug.Log("Lopata");
                 return false;
 
             case Items.Type.Can:

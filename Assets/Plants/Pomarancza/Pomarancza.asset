@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66f22bec1c4a6740aa79211d8ff30d6, type: 3}
+  m_Name: Pomarancza
+  m_EditorClassIdentifier: 
+  plantName: Pomarancza
+  seedIcon: {fileID: 21300000, guid: 5f113ebf8a3a79f4ab6df62147995f93, type: 3}
+  plantTextures:
+  - {fileID: 2800000, guid: ae46a140f403c664f9516efe17ef2b6f, type: 3}
+  - {fileID: 2800000, guid: 7af8adf429932a141bd00bf7d811bc33, type: 3}
+  - {fileID: 2800000, guid: fecb03d15392de54baa67945b98979c3, type: 3}
+  - {fileID: 2800000, guid: d335e1a22653bbd4aa9b0fe012f5e419, type: 3}
+  plantGrowthTime: 5400
+  plantGameID: 2
+  Price: 100

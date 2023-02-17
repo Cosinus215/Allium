@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     private Vector2 movementVector;
     private Vector3 moveVector;
     private Vector3 startPosition;
+
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float deadZone = 0.25f;
     [SerializeField] private GameObject directionPoint;
@@ -25,10 +26,16 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private PlayerInput input;
 
+    [SerializeField] private Vector3 gfxPos;
+    [Header("Swimming")]
+    [SerializeField] private float amplitude = 1;
+    [SerializeField] private float heightOffset = 1;
+    [SerializeField] private bool isInWater;
+
+
     void Start()
     {
-        startPosition = transform.position;
-
+        startPosition = transform.localPosition;
         if (Application.platform == RuntimePlatform.Android) {
             input.neverAutoSwitchControlSchemes = true;
             input.SwitchCurrentControlScheme(Gamepad.current);
@@ -38,6 +45,7 @@ public class Movement : MonoBehaviour
             joystick.SetActive(false);
         }
         characterController = GetComponent<CharacterController>();
+        gfxPos = Octi.transform.localPosition;
     }
 
     public void PlayerMovement(InputAction.CallbackContext context)
@@ -47,17 +55,33 @@ public class Movement : MonoBehaviour
         Player_LookDirection();
     }
 
-    private void Update()
-    {
+    private void Update() {
         moveVector = Vector3.zero;
+        bool inWater = IsInWater();
+        
+        if (inWater) {
+            Octi.transform.localPosition = new Vector3(gfxPos.x, 
+                amplitude * Mathf.Cos(Time.time ) + heightOffset,
+                gfxPos.z);
+        } else 
+        {
+            if(isInWater) 
+            {
+                Octi.transform.localPosition = gfxPos;
+            }
 
-        if (characterController.isGrounded == false) {
-            moveVector += Physics.gravity;
-        } else {
-            moveVector.y = 0;
+            if (characterController.isGrounded == false) {
+                moveVector += new Vector3(0, -1);
+            } else {
+                moveVector.y = 0;
+            }
         }
-
+        isInWater = inWater;
         characterController.Move(new Vector3(movementVector.x, moveVector.y, movementVector.y) * Time.deltaTime * movementSpeed);
+    }
+
+    private bool IsInWater() {
+        return Physics.CheckSphere(transform.position, 0.5f, LayerMask.GetMask("Water"));
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {
@@ -97,5 +121,4 @@ public class Movement : MonoBehaviour
             directionPoint.transform.localPosition = directionDown;
         }
     }
-
 }

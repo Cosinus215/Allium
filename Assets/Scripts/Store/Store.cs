@@ -12,7 +12,7 @@ public class Store : MonoBehaviour {
     [SerializeField] private GameObject StoreUI;
     [SerializeField] private GameObject store_Place;
     [SerializeField] private GameObject buttonPref;
-    [HideInInspector] public List<seed> magazyn = new List<seed>();
+    [SerializeField] public List<seed> magazyn = new List<seed>();
 
     private void Start() {
         if (Instance is null) {
@@ -57,6 +57,7 @@ public class Store : MonoBehaviour {
             b.GetComponent<Image>().sprite = s.plant.seedIcon;
             b.GetComponent<SeedInfo>().Seed = s.plant;
             b.transform.Find("Price").GetComponent<TextMeshProUGUI>().SetText(s.plant.Price.ToString());
+            b.transform.Find("Desc").GetComponent<TextMeshProUGUI>().SetText(s.plant.GetPlantName());
             b.onClick.AddListener(delegate { Inventory_System.Instance.Buy(temp); });
             number++;
         }
