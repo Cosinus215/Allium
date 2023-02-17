@@ -7349,7 +7349,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.22975291, y: -0.000000018722702, z: 0.00000000441983, w: 0.973249}
+  m_LocalRotation: {x: 0.22975291, y: 0.000000018722702, z: -0.00000000441983, w: 0.973249}
   m_LocalPosition: {x: 0, y: 6.2, z: -24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38276,7 +38276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tickEvent: {fileID: 11400000, guid: 3bef81e2ce4341047b8a6196ee785432, type: 2}
   plantsList: {fileID: 11400000, guid: fe2aa4178d5eac64a9f701a14b189244, type: 2}
-  dayTick: 0
+  dayTick: 4
   sun: {fileID: 410087040}
   sunAngleOverTime:
     serializedVersion: 2
@@ -50500,7 +50500,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756623393}
-  m_LocalRotation: {x: 0.22975291, y: -0.000000018722702, z: 0.00000000441983, w: 0.973249}
+  m_LocalRotation: {x: 0.22975291, y: 0.000000018722702, z: -0.00000000441983, w: 0.973249}
   m_LocalPosition: {x: 0, y: 6.2, z: -24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
