@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 public class Portal : MonoBehaviour
@@ -9,6 +10,7 @@ public class Portal : MonoBehaviour
     [SerializeField] private Sprite curSkin;
     [SerializeField] private Sprite[] skins;
     float nextChange = 0;
+    public UnityEvent e;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -23,6 +25,7 @@ public class Portal : MonoBehaviour
                 skins[a] = curSkin;
                 curSkin = bufor;
                 nextChange = Time.time + 2;
+                e.Invoke();
             }
         }
     }
