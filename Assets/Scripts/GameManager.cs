@@ -146,6 +146,11 @@ public class GameManager : MonoBehaviour
 
         bf.Serialize(file, sv);
         file.Close();
+
+        foreach(SeedSaveData ssssd in sv.seeds)
+        {
+            Debug.Log($"{ssssd.plantID} - { ssssd.amount}");
+        }
     }
     [ContextMenu("Load game")]
     public void LoadGame()
@@ -184,6 +189,7 @@ public class GameManager : MonoBehaviour
         Inventory_System.Instance.ClearSeedEq();
         foreach (SeedSaveData ssd in sv.seeds)
         {
+            Debug.Log($"{ssd.plantID} - {ssd.amount}");
             Inventory_System.Instance.AddSeedToInv(new seed(ssd));
         }
 
@@ -192,8 +198,9 @@ public class GameManager : MonoBehaviour
         {
             fb[i].SetFarmlandBlock(sv.blocks[i]);
         }
-
+        Inventory_System.Instance.SetMoney(sv.money);
         int ticksPassed = (int)Math.Abs((DateTime.Now - sv.saveTime).TotalSeconds);
+
 
         //robimy to teraz bo przy okazji aktualizuje siê wygl¹d roœlin
         tickEvent.Raise(ticksPassed);

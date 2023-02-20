@@ -105,17 +105,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: fe0f025f4eeffb94eaf1fc3070f827b7,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.3012698
+      value: 0.789506
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe0f025f4eeffb94eaf1fc3070f827b7,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2084305
+      value: 1.051512
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe0f025f4eeffb94eaf1fc3070f827b7,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.7319276
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe0f025f4eeffb94eaf1fc3070f827b7,
         type: 3}
@@ -203,4 +203,4 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 6349497404779363362, guid: fe0f025f4eeffb94eaf1fc3070f827b7, type: 3}
+  m_Mesh: {fileID: 664875537104599679, guid: fe0f025f4eeffb94eaf1fc3070f827b7, type: 3}

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-//using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -254,6 +253,11 @@ public class Inventory_System : MonoBehaviour {
         Coin.Money += amout;
         UpdateMoneyUI();
     }
+    public void SetMoney(int amout)
+    {
+        Coin.Money = amout;
+        UpdateMoneyUI();
+    }
     public void UpdateMoneyUI() {
         MoneyUI.SetText($"Coins: {Coin.Money}");
     }
@@ -277,7 +281,7 @@ public class seed {
     }
     public seed(SeedSaveData ssd)
     {
-        this.number = ssd.plantID;
+        this.number = ssd.amount;
         this.plant = GameManager.Instance.GetPlantDataByID(ssd.plantID);
     }
 
