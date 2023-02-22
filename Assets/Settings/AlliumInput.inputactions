@@ -378,6 +378,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "OpenMenu",
+                    "type": "Button",
+                    "id": "154ce265-3c48-4fec-8057-e642e74e1885",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Submit",
                     "type": "Button",
                     "id": "f685409b-b1b2-42a0-b6c0-04412e7a46bf",
@@ -875,6 +884,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5c1ef09-6a88-471f-afc0-dd1122c67760",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
