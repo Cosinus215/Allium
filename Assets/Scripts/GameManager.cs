@@ -146,11 +146,6 @@ public class GameManager : MonoBehaviour
 
         bf.Serialize(file, sv);
         file.Close();
-
-        foreach(SeedSaveData ssssd in sv.seeds)
-        {
-            Debug.Log($"{ssssd.plantID} - { ssssd.amount}");
-        }
     }
     [ContextMenu("Load game")]
     public void LoadGame()
