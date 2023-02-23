@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3858806091884245688
 RectTransform:
   m_ObjectHideFlags: 0
@@ -224,7 +224,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4605883650499804887}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3618156409006635097}
+        m_TargetAssemblyTypeName: MenuBtns, Assembly-CSharp
+        m_MethodName: OpenWebsite
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2536151849578768862
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,6 +399,7 @@ GameObject:
   - component: {fileID: 2536151851006579704}
   - component: {fileID: 2536151851006579687}
   - component: {fileID: 2678524182628773919}
+  - component: {fileID: 3618156409006635097}
   m_Layer: 0
   m_Name: Octi
   m_TagString: Untagged
@@ -565,9 +578,21 @@ MonoBehaviour:
     m_ActionId: 54f4acb8-f8be-41ca-bf05-30f9bfe125be
     m_ActionName: Player/New action
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 154ce265-3c48-4fec-8057-e642e74e1885
-    m_ActionName: UI/OpenMenu[/Keyboard/escape]
+      m_Calls:
+      - m_Target: {fileID: 3618156409006635097}
+        m_TargetAssemblyTypeName: MenuBtns, Assembly-CSharp
+        m_MethodName: OpenMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 05190438-f181-45ed-ac3e-1fdab723ef0b
+    m_ActionName: Player/OpenMenu[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -633,6 +658,20 @@ MonoBehaviour:
   effects: []
   Bundle: {fileID: 3821979042091807854}
   nextClick: 0
+--- !u!114 &3618156409006635097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2536151851006579686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf690026dd23d0449f02227e33c3302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 221332657431378024}
+  website: https://flyingoctopus.pl
 --- !u!1 &2648452216120165263
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3280806247213840188
@@ -1183,7 +1222,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7787847821620092355}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3618156409006635097}
+        m_TargetAssemblyTypeName: MenuBtns, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &3841708549794958711
 PrefabInstance:
   m_ObjectHideFlags: 0
