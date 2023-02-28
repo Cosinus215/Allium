@@ -47,7 +47,15 @@ public class GameManager : MonoBehaviour
         }
         path = Application.persistentDataPath + "/save.fly";
 
-        LoadGame();
+        if (LoadGame())
+        {
+            Debug.Log("<color=#00FF00>Game loaded!</color>");
+        }
+        else
+        {
+            Debug.Log("First play");
+            Inventory_System.Instance.SetMoney(25);
+        }
         StartCoroutine(GameTick());
     }
     private IEnumerator GameTick()
@@ -148,19 +156,19 @@ public class GameManager : MonoBehaviour
         file.Close();
     }
     [ContextMenu("Load game")]
-    public void LoadGame()
+    public bool LoadGame()
     {
         if (!File.Exists(path))
         { 
             Debug.Log("No savefile!"); 
-            return;
+            return false;
         }
         FileStream plik = File.Open(path, FileMode.Open);
 
         if (plik.Length <= 0)
         {
             Debug.Log("Savefile empty!");
-            return;
+            return false;
         }
     
         BinaryFormatter bf = new BinaryFormatter();
@@ -173,12 +181,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("File is damaged!");
             plik.Close();
-            return;
+            return false;
         }
         if (sv == null)
         {
             Debug.LogError("Class is damaged!");
-            return;
+            return false;
         }
 
         Inventory_System.Instance.ClearSeedEq();
@@ -202,6 +210,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Ticks passed {ticksPassed}");
         plik.Close();
+        return true;
     }
 
     //Metoda wykonywana nawet w edytorze - mo¿emy mieæ podgl¹d nawet poza gr¹!
