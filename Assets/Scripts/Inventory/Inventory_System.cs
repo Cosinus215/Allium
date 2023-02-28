@@ -40,7 +40,6 @@ public class Inventory_System : MonoBehaviour {
     }
     private void Start() 
     {
-        
         if (Eq.Count > 0) 
         {
             handPlace.GetComponent<MeshRenderer>().enabled = true;
@@ -140,7 +139,7 @@ public class Inventory_System : MonoBehaviour {
                     if (b) {
                         UpdateBundleUI();
                     }
-                    return;
+                    break;
                 }
             }
             int a = currentItem.EffectNumber;

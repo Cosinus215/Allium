@@ -7,6 +7,7 @@ public class Candle : MonoBehaviour, IInteractable
 {
     [SerializeField] private Light fire;
     [SerializeField] private UnityEvent toRise;
+    [SerializeField] private ParticleSystem smoke;
     public bool IsLit = true;
 
     void Start()
@@ -29,6 +30,7 @@ public class Candle : MonoBehaviour, IInteractable
             case Items.Type.Can:
                 fire.enabled = false;
                 IsLit = false;
+                smoke.Stop();
                 toRise.Invoke();
                 return true;
 
@@ -44,5 +46,6 @@ public class Candle : MonoBehaviour, IInteractable
     {
         fire.enabled = true;
         IsLit = true;
+        smoke.Play();
     }
 }
